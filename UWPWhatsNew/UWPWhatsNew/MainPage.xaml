@@ -8,6 +8,27 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Image>
+            <Image.Source>
+                <BitmapImage x:Name="imageSource"
+                             UriSource="Assets/giphy.gif" />
+            </Image.Source>
+        </Image>
 
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Play"
+                    Click="Play_Click"
+                    AccessKey="P" />
+            <Button Content="Pause"
+                    Click="Pause_Click"
+                    AccessKey="T" />
+            <RadioButton Content="Auto Play"
+                         Checked="RadioButton_Checked"
+                         Unchecked="RadioButton_Unchecked" />
+        </StackPanel>
     </Grid>
 </Page>
