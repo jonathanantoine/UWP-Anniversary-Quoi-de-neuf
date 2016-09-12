@@ -2,24 +2,19 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
-
-namespace UWPWhatsNew
+namespace UWPWhatsNew.Views.AnimatedGif
 {
-    /// <summary>
-    /// An empty page that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class MainPage : Page
+    public sealed partial class AnimatedGifPage : Page
     {
-        public MainPage()
+        public AnimatedGifPage()
         {
-            this.InitializeComponent();
+            InitializeComponent();
         }
 
         private void Play_Click(object sender, RoutedEventArgs e)
         {
             if (HaveAnimatedBitmapInAPI())
-                this.imageSource.Play();
+                this.ImageSource.Play();
         }
 
         private bool HaveAnimatedBitmapInAPI()
@@ -30,19 +25,19 @@ namespace UWPWhatsNew
         private void Pause_Click(object sender, RoutedEventArgs e)
         {
             if (HaveAnimatedBitmapInAPI())
-                this.imageSource.Stop();
+                this.ImageSource.Stop();
         }
 
         private void RadioButton_Checked(object sender, RoutedEventArgs e)
         {
             if (HaveAnimatedBitmapInAPI())
-                this.imageSource.AutoPlay = true;
+                this.ImageSource.AutoPlay = true;
         }
 
         private void RadioButton_Unchecked(object sender, RoutedEventArgs e)
         {
             if (HaveAnimatedBitmapInAPI())
-                this.imageSource.AutoPlay = false;
+                this.ImageSource.AutoPlay = false;
         }
     }
 }
