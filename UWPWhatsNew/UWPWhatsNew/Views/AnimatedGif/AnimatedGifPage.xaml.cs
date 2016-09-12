@@ -27,17 +27,5 @@ namespace UWPWhatsNew.Views.AnimatedGif
             if (HaveAnimatedBitmapInAPI())
                 this.ImageSource.Stop();
         }
-
-        private void RadioButton_Checked(object sender, RoutedEventArgs e)
-        {
-            if (HaveAnimatedBitmapInAPI())
-                this.ImageSource.AutoPlay = true;
-        }
-
-        private void RadioButton_Unchecked(object sender, RoutedEventArgs e)
-        {
-            if (HaveAnimatedBitmapInAPI())
-                this.ImageSource.AutoPlay = false;
-        }
     }
 }

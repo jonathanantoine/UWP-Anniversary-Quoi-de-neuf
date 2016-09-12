@@ -119,6 +119,7 @@
     <None Include="UWPWhatsNew_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\giphy.gif" />
     <Content Include="Assets\Images\IConAnimations.png" />
     <Content Include="Assets\Images\IconConnected.png" />
     <Content Include="Assets\Images\IconExtensibility.png" />
