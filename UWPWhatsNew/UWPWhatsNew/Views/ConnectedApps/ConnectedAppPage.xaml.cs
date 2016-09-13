@@ -55,5 +55,10 @@ namespace UWPWhatsNew.Views.ConnectedApps
         {
             ViewModel.LaunchUriAsync();
         }
+
+        private void OnLaunchUriRAZClicked(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ResetLaunchUri();
+        }
     }
 }

@@ -38,9 +38,14 @@
                 <TextBox Header="URI à lancer"
                          FontWeight="Light"
                          PlaceholderText="Saisir l'URI à lancer sur le device"
-                         Text="http://www.infinitesquare.com" />
+                         Text="{x:Bind ViewModel.TargetLaunchUri,Mode=TwoWay}" />
+                <StackPanel Orientation="Horizontal" Margin="0,2">
                 <Button Content="Décollage"
                         Click="OnLaunchUriClicked" />
+                    <Button Content="RAZ"
+                            Margin="5,0"
+                            Click="OnLaunchUriRAZClicked" />
+                </StackPanel>
 
                 <TextBlock Foreground="OrangeRed"
                            Margin="0,10"

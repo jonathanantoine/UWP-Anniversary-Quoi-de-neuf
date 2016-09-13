@@ -12,7 +12,15 @@ namespace UWPWhatsNew.Views.ConnectedApps
 {
     public class ConnectedAppViewModel : BindableBase
     {
+        private readonly AsyncLock _listDevicesAsyncLock = new AsyncLock();
+        private RemoteSystemWatcher _watcher;
 
+        public ConnectedAppViewModel()
+        {
+            ResetLaunchUri();
+        }
+
+        #region launch uri properties
         private string _targetLaunchUri;
         public string TargetLaunchUri
         {
@@ -25,7 +33,8 @@ namespace UWPWhatsNew.Views.ConnectedApps
         {
             get { return _launchRemoteUriResult; }
             set { SetProperty(ref _launchRemoteUriResult, value); }
-        }
+        } 
+        #endregion
 
         #region Listing properties
 
@@ -63,10 +72,7 @@ namespace UWPWhatsNew.Views.ConnectedApps
             }
         }
         #endregion
-
-        private readonly AsyncLock _listDevicesAsyncLock = new AsyncLock();
-        private RemoteSystemWatcher _watcher;
-
+        
         private async Task ListDevicesAsync()
         {
             using (await _listDevicesAsyncLock.LockAsync())
@@ -170,6 +176,11 @@ namespace UWPWhatsNew.Views.ConnectedApps
 
                 LaunchRemoteUriResult = "Appel effectué : " + result;
             }
+        }
+
+        public void ResetLaunchUri()
+        {
+            TargetLaunchUri = "td2016whatsnew://poney";
         }
     }
 }
