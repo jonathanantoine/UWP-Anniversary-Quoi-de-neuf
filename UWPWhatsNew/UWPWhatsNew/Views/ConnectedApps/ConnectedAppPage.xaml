@@ -3,10 +3,37 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:local="using:UWPWhatsNew.Views.ConnectedApps"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      NavigationCacheMode="Required"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d">
+    <Page.DataContext>
+        <local:ConnectedAppViewModel />
+    </Page.DataContext>
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Pivot Title="Connected Apps : le projet ROME">
+        <PivotItem Header="Listing">
+            <StackPanel>
+
+                <ListView ItemsSource="{x:Bind ViewModel.RemoteSystems}">
+                    <ListView.Header>
+                        <CheckBox Margin="10,0,0,0"
+                                  IsThreeState="False"
+                                  IsChecked="{x:Bind ViewModel.IsListingOnlyActiveDevices,Mode=TwoWay}"
+                                  Content="Ne lister seulement que les périphériques actifs" />
+                    </ListView.Header>
+                </ListView>
+            </StackPanel>
+
+        </PivotItem>
+        <PivotItem Header="Lancer une app">
+
+        </PivotItem>
+        <PivotItem Header="AppService... à distance">
+
+        </PivotItem>
+    </Pivot>
+    <!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        
         <TextBlock Text="ROME" />
-    </Grid>
+    </Grid>-->
 </Page>

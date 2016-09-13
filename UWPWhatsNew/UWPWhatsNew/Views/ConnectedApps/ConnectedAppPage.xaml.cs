@@ -22,9 +22,36 @@ namespace UWPWhatsNew.Views.ConnectedApps
     /// </summary>
     public sealed partial class ConnectedAppPage : Page
     {
+
+        #region ViewModel
+
+        /// <summary>
+        /// ViewModel Dependency Property
+        /// </summary>
+        public static readonly DependencyProperty ViewModelProperty =
+            DependencyProperty.Register("ViewModel", typeof(ConnectedAppViewModel), typeof(ConnectedAppPage),
+                new PropertyMetadata((ConnectedAppViewModel)null));
+
+        /// <summary>
+        /// Gets or sets the ViewModel property. This dependency property 
+        /// indicates ....
+        /// </summary>
+        public ConnectedAppViewModel ViewModel
+        {
+            get { return (ConnectedAppViewModel)GetValue(ViewModelProperty); }
+            set { SetValue(ViewModelProperty, value); }
+        }
+
+        #endregion
+
+
+
         public ConnectedAppPage()
         {
             this.InitializeComponent();
+            ViewModel = DataContext as ConnectedAppViewModel;
         }
+
+
     }
 }

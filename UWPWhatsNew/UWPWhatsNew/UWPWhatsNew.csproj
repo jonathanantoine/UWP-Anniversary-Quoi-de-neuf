@@ -95,10 +95,13 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Common\AsyncHelpers\AsyncLock.cs" />
+    <Compile Include="Common\AsyncHelpers\AsyncSemaphore.cs" />
     <Compile Include="Common\BindableBase.cs" />
     <Compile Include="Views\ConnectedApps\ConnectedAppPage.xaml.cs">
       <DependentUpon>ConnectedAppPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\ConnectedApps\ConnectedAppViewModel.cs" />
     <Compile Include="Views\Home\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>

@@ -17,13 +17,15 @@ namespace UWPWhatsNew.Common
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public void SetProperty<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        public bool SetProperty<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
         {
             if (!Equals(storage, value))
             {
                 storage = value;
                 RaisePropertyChanged(propertyName);
+                return true;
             }
+            return false;
         }
     }
 
