@@ -14,7 +14,9 @@
         <PivotItem Header="LISTING">
             <StackPanel>
 
-                <ListView ItemsSource="{x:Bind ViewModel.RemoteSystems}">
+                <ListView ItemsSource="{x:Bind ViewModel.RemoteSystems}"
+                          SelectionMode="Single"
+                          SelectedItem="{x:Bind ViewModel.SelectedRemoteSystem, Mode=TwoWay}">
                     <ListView.Header>
                         <StackPanel>
                             <CheckBox Margin="0,0,0,0"
@@ -24,7 +26,7 @@
                             <TextBlock Foreground="OrangeRed"
                                        Margin="0,10"
                                        FontWeight="Light"
-                                       Text="{x:Bind ViewModel.RequestAccessError}" />
+                                       Text="{x:Bind ViewModel.RequestAccessError,Mode=OneWay}" />
                         </StackPanel>
                     </ListView.Header>
                 </ListView>
@@ -32,6 +34,19 @@
 
         </PivotItem>
         <PivotItem Header="LANCER UNE APP">
+            <StackPanel>
+                <TextBox Header="URI à lancer"
+                         FontWeight="Light"
+                         PlaceholderText="Saisir l'URI à lancer sur le device"
+                         Text="http://www.infinitesquare.com" />
+                <Button Content="Décollage"
+                        Click="OnLaunchUriClicked" />
+
+                <TextBlock Foreground="OrangeRed"
+                           Margin="0,10"
+                           FontWeight="Light"
+                           Text="{x:Bind ViewModel.LaunchRemoteUriResult,Mode=OneWay}" />
+            </StackPanel>
 
         </PivotItem>
         <PivotItem Header="APPSERVICE">

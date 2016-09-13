@@ -43,8 +43,7 @@ namespace UWPWhatsNew.Views.ConnectedApps
         }
 
         #endregion
-
-
+        
 
         public ConnectedAppPage()
         {
@@ -52,6 +51,9 @@ namespace UWPWhatsNew.Views.ConnectedApps
             ViewModel = DataContext as ConnectedAppViewModel;
         }
 
-
+        private void OnLaunchUriClicked(object sender, RoutedEventArgs e)
+        {
+            ViewModel.LaunchUriAsync();
+        }
     }
 }

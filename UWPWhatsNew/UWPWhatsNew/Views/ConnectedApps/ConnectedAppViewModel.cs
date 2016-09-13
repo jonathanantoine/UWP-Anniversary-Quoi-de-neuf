@@ -12,15 +12,38 @@ namespace UWPWhatsNew.Views.ConnectedApps
 {
     public class ConnectedAppViewModel : BindableBase
     {
-        private string _requestAccessError;
 
+        private string _targetLaunchUri;
+        public string TargetLaunchUri
+        {
+            get { return _targetLaunchUri; }
+            set { SetProperty(ref _targetLaunchUri, value); }
+        }
+
+        private string _launchRemoteUriResult = string.Empty;
+        public string LaunchRemoteUriResult
+        {
+            get { return _launchRemoteUriResult; }
+            set { SetProperty(ref _launchRemoteUriResult, value); }
+        }
+
+        #region Listing properties
+
+        private string _requestAccessError;
         public string RequestAccessError
         {
-            get { return _requestAccessError; } set { SetProperty(ref _requestAccessError, value); }
+            get { return _requestAccessError; }
+            set { SetProperty(ref _requestAccessError, value); }
         }
-    
-        private ObservableCollection<RemoteSystem> _remoteSystems;
 
+        private RemoteSystem _selectedRemoteSystem;
+        public RemoteSystem SelectedRemoteSystem
+        {
+            get { return _selectedRemoteSystem; }
+            set { SetProperty(ref _selectedRemoteSystem, value); }
+        }
+
+        private ObservableCollection<RemoteSystem> _remoteSystems;
         public ObservableCollection<RemoteSystem> RemoteSystems
         {
             get { return _remoteSystems; }
@@ -39,6 +62,7 @@ namespace UWPWhatsNew.Views.ConnectedApps
                 }
             }
         }
+        #endregion
 
         private readonly AsyncLock _listDevicesAsyncLock = new AsyncLock();
         private RemoteSystemWatcher _watcher;
@@ -119,6 +143,33 @@ namespace UWPWhatsNew.Views.ConnectedApps
             OnWatcherRemoteSystemAdded(RemoteSystemWatcher sender, RemoteSystemAddedEventArgs args)
         {
             RemoteSystems.Add(args.RemoteSystem);
+        }
+
+        private readonly AsyncLock _launchUriAsyncLock = new AsyncLock();
+        public async Task LaunchUriAsync()
+        {
+            using (await _launchUriAsyncLock.LockAsync())
+            {
+                LaunchRemoteUriResult = string.Empty;
+
+                var target = SelectedRemoteSystem;
+                if (target == null)
+                {
+                    LaunchRemoteUriResult = "Il faut sélectionner une cible...";
+                    return;
+                }
+
+                var request = new RemoteSystemConnectionRequest(target);
+
+                var launchUriTask = Windows.System.RemoteLauncher
+                    .LaunchUriAsync(request, new Uri(TargetLaunchUri));
+
+                LaunchRemoteUriResult = "Appel en cours...";
+
+                var result = await launchUriTask;
+
+                LaunchRemoteUriResult = "Appel effectué : " + result;
+            }
         }
     }
 }
