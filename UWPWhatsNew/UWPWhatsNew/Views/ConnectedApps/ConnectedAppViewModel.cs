@@ -12,6 +12,13 @@ namespace UWPWhatsNew.Views.ConnectedApps
 {
     public class ConnectedAppViewModel : BindableBase
     {
+        private string _requestAccessError;
+
+        public string RequestAccessError
+        {
+            get { return _requestAccessError; } set { SetProperty(ref _requestAccessError, value); }
+        }
+    
         private ObservableCollection<RemoteSystem> _remoteSystems;
 
         public ObservableCollection<RemoteSystem> RemoteSystems
@@ -40,9 +47,11 @@ namespace UWPWhatsNew.Views.ConnectedApps
         {
             using (await _listDevicesAsyncLock.LockAsync())
             {
+                RequestAccessError = string.Empty;
                 var result = await RemoteSystem.RequestAccessAsync();
                 if (result != RemoteSystemAccessStatus.Allowed)
                 {
+                    RequestAccessError = "Impossible de lister les périphériques : " + result;
                     return;
                 }
 

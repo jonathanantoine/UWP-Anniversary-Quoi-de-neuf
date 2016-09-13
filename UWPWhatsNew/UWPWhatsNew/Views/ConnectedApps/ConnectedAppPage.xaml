@@ -11,24 +11,30 @@
     </Page.DataContext>
 
     <Pivot Title="Connected Apps : le projet ROME">
-        <PivotItem Header="Listing">
+        <PivotItem Header="LISTING">
             <StackPanel>
 
                 <ListView ItemsSource="{x:Bind ViewModel.RemoteSystems}">
                     <ListView.Header>
-                        <CheckBox Margin="10,0,0,0"
-                                  IsThreeState="False"
-                                  IsChecked="{x:Bind ViewModel.IsListingOnlyActiveDevices,Mode=TwoWay}"
-                                  Content="Ne lister seulement que les périphériques actifs" />
+                        <StackPanel>
+                            <CheckBox Margin="0,0,0,0"
+                                      IsThreeState="False"
+                                      IsChecked="{x:Bind ViewModel.IsListingOnlyActiveDevices,Mode=TwoWay}"
+                                      Content="Ne lister seulement que les périphériques actifs" />
+                            <TextBlock Foreground="OrangeRed"
+                                       Margin="0,10"
+                                       FontWeight="Light"
+                                       Text="{x:Bind ViewModel.RequestAccessError}" />
+                        </StackPanel>
                     </ListView.Header>
                 </ListView>
             </StackPanel>
 
         </PivotItem>
-        <PivotItem Header="Lancer une app">
+        <PivotItem Header="LANCER UNE APP">
 
         </PivotItem>
-        <PivotItem Header="AppService... à distance">
+        <PivotItem Header="APPSERVICE">
 
         </PivotItem>
     </Pivot>
