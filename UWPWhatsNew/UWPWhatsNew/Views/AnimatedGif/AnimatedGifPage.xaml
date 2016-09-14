@@ -24,12 +24,14 @@
             <Button Content="Play"
                     Click="Play_Click"
                     AccessKey="P"
+                    FontSize="20"
                     Margin="5"
                     Width="80" />
             <Button Content="Pause"
                     Click="Pause_Click"
                     AccessKey="T"
                     Margin="5"
+                    FontSize="20"
                     Width="80" />
         </StackPanel>
     </Grid>

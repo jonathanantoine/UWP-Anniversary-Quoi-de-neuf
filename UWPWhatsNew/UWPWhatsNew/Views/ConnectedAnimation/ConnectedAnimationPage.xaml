@@ -1,12 +1,11 @@
-﻿<Page
-    x:Class="UWPWhatsNew.Views.ConnectedAnimation.ConnectedAnimationPage"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:local="using:UWPWhatsNew.Views.ConnectedAnimation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:data="using:UWPWhatsNew.Views.ConnectedAnimation"
-    mc:Ignorable="d">
+﻿<Page x:Class="UWPWhatsNew.Views.ConnectedAnimation.ConnectedAnimationPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:UWPWhatsNew.Views.ConnectedAnimation"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:data="using:UWPWhatsNew.Views.ConnectedAnimation"
+      mc:Ignorable="d">
     <Page.DataContext>
         <local:ConnectedAnimationViewModel />
     </Page.DataContext>
@@ -18,6 +17,7 @@
                   SelectionMode="None"
                   IsItemClickEnabled="True"
                   ItemClick="ItemsGridView_ItemClick"
+                  Margin="50"
                   ItemsSource="{x:Bind ViewModel.Items}">
             <GridView.ItemContainerTransitions>
                 <TransitionCollection>
@@ -27,11 +27,17 @@
 
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="data:Thumbnail">
-                    <Image x:Name="ImageItem"
-                           Source="{x:Bind ImageUrl}"
-                           Width="240"
-                           Height="160"
-                           Stretch="Fill" />
+
+                    <Border BorderBrush="Black"
+                            BorderThickness="1">
+                        <Image x:Name="ImageItem"
+                               Width="200"
+                               Height="200"
+                               Margin="2"
+                               Stretch="Uniform"
+                               Source="{x:Bind ImageUrl}" />
+                    </Border>
+
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>

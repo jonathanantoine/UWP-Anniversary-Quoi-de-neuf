@@ -19,6 +19,7 @@
                 AccessKey="C"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
+                FontSize="20"
                 Click="Header_Click"/>
 
     </Grid>
