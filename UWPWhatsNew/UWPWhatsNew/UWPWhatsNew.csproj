@@ -45,7 +45,7 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\ARM\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <NoWarn>;2008</NoWarn>
+    <NoWarn>;2008;4014</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>ARM</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
@@ -68,7 +68,7 @@
     <DebugSymbols>true</DebugSymbols>
     <OutputPath>bin\x64\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;NETFX_CORE;WINDOWS_UWP</DefineConstants>
-    <NoWarn>;2008</NoWarn>
+    <NoWarn>;2008;4014</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>x64</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
@@ -98,12 +98,18 @@
     <Compile Include="Common\AsyncHelpers\AsyncLock.cs" />
     <Compile Include="Common\AsyncHelpers\AsyncSemaphore.cs" />
     <Compile Include="Common\BindableBase.cs" />
+    <Compile Include="Common\BooleanToSomethingConverter.cs" />
+    <Compile Include="Common\DispatcherHelper.cs" />
+    <Compile Include="Common\RemoteSystemStatusToColorConverter.cs" />
     <Compile Include="Views\ConnectedApps\ConnectedAppPage.xaml.cs">
       <DependentUpon>ConnectedAppPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\ConnectedApps\ConnectedAppViewModel.cs" />
     <Compile Include="Views\Home\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Partials\SnowFallUserControl.xaml.cs">
+      <DependentUpon>SnowFallUserControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Shell\AvailableItem.cs" />
     <Compile Include="Views\Shell\Shell.xaml.cs">
@@ -129,6 +135,7 @@
     <Content Include="Assets\Images\IconGIF.png" />
     <Content Include="Assets\Images\IconInk.png" />
     <Content Include="Assets\Images\IconSingleProcess.png" />
+    <Content Include="Assets\Images\unicorn.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -148,6 +155,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Home\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Partials\SnowFallUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

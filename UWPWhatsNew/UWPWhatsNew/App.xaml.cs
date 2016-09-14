@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
@@ -16,6 +17,8 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using UWPWhatsNew.Common;
+using UWPWhatsNew.Views.Partials;
 using Application = Windows.UI.Xaml.Application;
 
 namespace UWPWhatsNew
@@ -35,6 +38,9 @@ namespace UWPWhatsNew
             this.Suspending += OnSuspending;
         }
 
+        public Frame RootFrame { get; set; }
+
+
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
         /// will be used such as when the application is launched to open a specific file.
@@ -42,13 +48,21 @@ namespace UWPWhatsNew
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
             if (e.PrelaunchActivated)
-
             {
                 return;
             }
 
+            InitializeFrame(e);
+        }
+
+        private void InitializeFrame(IActivatedEventArgs e)
+        {
+            if (RootFrame != null)
+            {
+                return;
+            }
+            DispatcherHelper.Initialize();
 #if DEBUG
             if (System.Diagnostics.Debugger.IsAttached)
             {
@@ -57,21 +71,20 @@ namespace UWPWhatsNew
 #endif
 
             var titleBar = ApplicationView.GetForCurrentView().TitleBar;
-
             titleBar.ButtonBackgroundColor = ((SolidColorBrush)Resources["TitleBarButtonColorBrush"]).Color;
-            titleBar.BackgroundColor = ((SolidColorBrush)Resources["MainColorBrush"]).Color; 
+            titleBar.BackgroundColor = ((SolidColorBrush)Resources["MainColorBrush"]).Color;
             titleBar.ForegroundColor = titleBar.ButtonForegroundColor;
 
-            Frame rootFrame = Window.Current.Content as Frame;
+            RootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
-            if (rootFrame == null)
+            if (RootFrame == null)
             {
                 // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame();
+                RootFrame = new Frame();
 
-                rootFrame.NavigationFailed += OnNavigationFailed;
+                RootFrame.NavigationFailed += OnNavigationFailed;
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
@@ -79,22 +92,21 @@ namespace UWPWhatsNew
                 }
 
                 // Place the frame in the current Window
-                Window.Current.Content = rootFrame;
+                Window.Current.Content = RootFrame;
             }
 
-            if (e.PrelaunchActivated == false)
+            if (RootFrame.Content == null)
             {
-                if (rootFrame.Content == null)
-                {
-                    // When the navigation stack isn't restored navigate to the first page,
-                    // configuring the new page by passing required information as a navigation
-                    // parameter
-                    rootFrame.Navigate(typeof(Shell), e.Arguments);
-                }
-                // Ensure the current window is active
-                Window.Current.Activate();
+                // When the navigation stack isn't restored navigate to the first page,
+                // configuring the new page by passing required information as a navigation
+                // parameter
+                RootFrame.Navigate(typeof(Shell), (e as LaunchActivatedEventArgs)?.Arguments);
             }
+            // Ensure the current window is active
+            Window.Current.Activate();
+
         }
+
 
         /// <summary>
         /// Invoked when Navigation to a certain page fails
@@ -118,6 +130,39 @@ namespace UWPWhatsNew
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
+        }
+
+
+
+        protected override void OnActivated(IActivatedEventArgs args)
+        {
+            base.OnActivated(args);
+            bool shouldDelay=RootFrame == null;
+            InitializeFrame(args);
+
+            var protocol = args as ProtocolActivatedEventArgs;
+            if (protocol?.Uri.Host?.ToLowerInvariant() == "snowfall")
+            {
+                SnowFallAsync(shouldDelay);
+            }
+            //td2016whatsnew://snowfall
+        }
+
+        private static readonly Random _Random = new Random((int)DateTime.UtcNow.Ticks);
+        private async Task SnowFallAsync(bool shouldDelay)
+        {
+            if (shouldDelay)
+            {
+                await DispatcherHelper.UIDispatcher.RunIdleAsync(_ => { });
+            }
+
+            var panel = (RootFrame.ContentTemplateRoot as Page)?.Content as Grid;
+            for (int i = 0; i < 12; i++)
+            {
+                await Task.Delay(_Random.Next(50, 200));
+                panel?.Children.Add(new SnowFallUserControl());
+                panel?.Children.Add(new SnowFallUserControl());
+            }
         }
     }
 }

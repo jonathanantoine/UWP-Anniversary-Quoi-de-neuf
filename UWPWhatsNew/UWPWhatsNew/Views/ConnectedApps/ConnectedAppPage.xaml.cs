@@ -43,22 +43,12 @@ namespace UWPWhatsNew.Views.ConnectedApps
         }
 
         #endregion
-        
+
 
         public ConnectedAppPage()
         {
             this.InitializeComponent();
             ViewModel = DataContext as ConnectedAppViewModel;
-        }
-
-        private void OnLaunchUriClicked(object sender, RoutedEventArgs e)
-        {
-            ViewModel.LaunchUriAsync();
-        }
-
-        private void OnLaunchUriRAZClicked(object sender, RoutedEventArgs e)
-        {
-            ViewModel.ResetLaunchUri();
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.System;
 using Windows.System.RemoteSystems;
 using UWPWhatsNew.Common;
 using UWPWhatsNew.Common.AsyncHelpers;
@@ -18,9 +19,15 @@ namespace UWPWhatsNew.Views.ConnectedApps
         public ConnectedAppViewModel()
         {
             ResetLaunchUri();
+            ListDevicesAsync();
         }
 
         #region launch uri properties
+
+        private string _targetLaunchHost;
+        public string TargetLaunchHost { get { return _targetLaunchHost; } set { SetProperty(ref _targetLaunchHost, value); } }
+
+
         private string _targetLaunchUri;
         public string TargetLaunchUri
         {
@@ -33,7 +40,7 @@ namespace UWPWhatsNew.Views.ConnectedApps
         {
             get { return _launchRemoteUriResult; }
             set { SetProperty(ref _launchRemoteUriResult, value); }
-        } 
+        }
         #endregion
 
         #region Listing properties
@@ -72,7 +79,7 @@ namespace UWPWhatsNew.Views.ConnectedApps
             }
         }
         #endregion
-        
+
         private async Task ListDevicesAsync()
         {
             using (await _listDevicesAsyncLock.LockAsync())
@@ -85,16 +92,23 @@ namespace UWPWhatsNew.Views.ConnectedApps
                     return;
                 }
 
+                if (_watcher != null)
+                {
+                    _watcher.RemoteSystemAdded -= OnWatcherRemoteSystemAdded;
+                    _watcher.RemoteSystemRemoved -= OnWatcherRemoteSystemRemoved;
+                    _watcher.RemoteSystemUpdated -= OnWatcher_RemoteSystemUpdated;
+                }
+
                 RemoteSystems = new ObservableCollection<RemoteSystem>();
 
                 if (IsListingOnlyActiveDevices)
                 {
-                    var filter = new[]
+                    var filter = new IRemoteSystemFilter[]
                     {
-                        new RemoteSystemStatusTypeFilter(RemoteSystemStatusType.Available)
+                        new RemoteSystemStatusTypeFilter(RemoteSystemStatusType.Available),
+                        new RemoteSystemDiscoveryTypeFilter(RemoteSystemDiscoveryType.Cloud),
                     };
                     _watcher = RemoteSystem.CreateWatcher(filter);
-
                 }
                 else
                 {
@@ -123,7 +137,16 @@ namespace UWPWhatsNew.Views.ConnectedApps
 
             if (target >= 0)
             {
-                RemoteSystems[target] = args.RemoteSystem;
+                DispatcherHelper.UIDispatcher.RunIdleAsync(_ =>
+                {
+                    var original = RemoteSystems[target];
+                    RemoteSystems[target] = args.RemoteSystem;
+                    if (SelectedRemoteSystem == original)
+                    {
+                        SelectedRemoteSystem = args.RemoteSystem;
+                    }
+                });
+
             }
         }
 
@@ -141,14 +164,19 @@ namespace UWPWhatsNew.Views.ConnectedApps
 
             if (target >= 0)
             {
-                RemoteSystems.RemoveAt(target);
+                DispatcherHelper.UIDispatcher.RunIdleAsync(_ =>
+                {
+                    RemoteSystems.RemoveAt(target);
+                });
             }
         }
 
-        private void
-            OnWatcherRemoteSystemAdded(RemoteSystemWatcher sender, RemoteSystemAddedEventArgs args)
+        private void OnWatcherRemoteSystemAdded(RemoteSystemWatcher sender, RemoteSystemAddedEventArgs args)
         {
-            RemoteSystems.Add(args.RemoteSystem);
+            DispatcherHelper.UIDispatcher.RunIdleAsync(_ =>
+            {
+                RemoteSystems.Add(args.RemoteSystem);
+            });
         }
 
         private readonly AsyncLock _launchUriAsyncLock = new AsyncLock();
@@ -164,23 +192,58 @@ namespace UWPWhatsNew.Views.ConnectedApps
                     LaunchRemoteUriResult = "Il faut sélectionner une cible...";
                     return;
                 }
+                if (!string.IsNullOrEmpty(TargetLaunchHost))
+                {
+                    // construct a HostName object
+                    Windows.Networking.HostName deviceHost = new Windows.Networking.HostName(TargetLaunchHost);
+
+                    // create a RemoteSystem object with the HostName
+                    var remotesys = await RemoteSystem.FindByHostNameAsync(deviceHost);
+                    if (remotesys != null)
+                    {
+                        LaunchRemoteUriResult = "Cible trouvée";
+
+                        target = remotesys;
+                    }
+                }
 
                 var request = new RemoteSystemConnectionRequest(target);
+                var options = new RemoteLauncherOptions
+                {
+                    FallbackUri = new Uri("http://infinitesquare.com"),
+                    PreferredAppIds = { "a7d1054a-8dc3-47e8-8d51-90d70a9f5a2f_n6jrw4wtwxjjj" }
+                };
 
                 var launchUriTask = Windows.System.RemoteLauncher
-                    .LaunchUriAsync(request, new Uri(TargetLaunchUri));
+                    .LaunchUriAsync(request, new Uri(TargetLaunchUri), options);
 
                 LaunchRemoteUriResult = "Appel en cours...";
+                var timeout = Task.Delay(7000);
+                await Task.WhenAny(timeout, launchUriTask.AsTask());
 
-                var result = await launchUriTask;
+                if (timeout.IsCompleted)
+                {
+                    LaunchRemoteUriResult = "Timeout.... ";
 
-                LaunchRemoteUriResult = "Appel effectué : " + result;
+                }
+                else
+                {
+                    var result = await launchUriTask;
+
+                    LaunchRemoteUriResult = "Appel effectué : " + result;
+                }
+
             }
+        }
+
+        public async Task LaunchUriLocalAsync()
+        {
+            Launcher.LaunchUriAsync(new Uri(TargetLaunchUri));
         }
 
         public void ResetLaunchUri()
         {
-            TargetLaunchUri = "td2016whatsnew://poney";
+            TargetLaunchUri = "td2016whatsnew://snowfall";
         }
     }
 }

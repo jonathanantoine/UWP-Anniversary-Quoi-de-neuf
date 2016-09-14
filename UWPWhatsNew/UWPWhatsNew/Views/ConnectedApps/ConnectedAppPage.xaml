@@ -5,7 +5,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       NavigationCacheMode="Required"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:RemoteSystems="using:Windows.System.RemoteSystems"
+      xmlns:Common="using:UWPWhatsNew.Common"
       mc:Ignorable="d">
+    <Page.Resources>
+        <Common:RemoteSystemStatusToColorConverter x:Key="RemoteSystemStatusToColorConverter" />
+        <Common:BooleanToSomethingConverter x:Key="AvailableByProximityConverter"
+                                            IfFalse="Disponible via le CLOUD"
+                                            IfTrue="Disponible en LOCAL" />
+    </Page.Resources>
     <Page.DataContext>
         <local:ConnectedAppViewModel />
     </Page.DataContext>
@@ -14,7 +22,7 @@
         <PivotItem Header="LISTING">
             <StackPanel>
 
-                <ListView ItemsSource="{x:Bind ViewModel.RemoteSystems}"
+                <ListView ItemsSource="{x:Bind ViewModel.RemoteSystems,Mode=OneWay}"
                           SelectionMode="Single"
                           SelectedItem="{x:Bind ViewModel.SelectedRemoteSystem, Mode=TwoWay}">
                     <ListView.Header>
@@ -29,28 +37,65 @@
                                        Text="{x:Bind ViewModel.RequestAccessError,Mode=OneWay}" />
                         </StackPanel>
                     </ListView.Header>
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="RemoteSystems:RemoteSystem">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="32" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Rectangle HorizontalAlignment="Center"
+                                           VerticalAlignment="Center"
+                                           Width="30"
+                                           Height="30"
+                                           Fill="{x:Bind Status,Converter={StaticResource RemoteSystemStatusToColorConverter}}" />
+                                <StackPanel  Margin="4,0,0,0"
+                                             Grid.Column="1"
+                                             Orientation="Vertical">
+                                    <TextBlock Text="{x:Bind DisplayName}" />
+                                    <TextBlock Text="{x:Bind IsAvailableByProximity,Converter={StaticResource AvailableByProximityConverter}}"
+                                               Foreground="Gray"
+                                               FontWeight="Light"
+                                               Margin="0,-4,0,0" />
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </StackPanel>
 
         </PivotItem>
         <PivotItem Header="LANCER UNE APP">
             <StackPanel>
+
+                <!--<TextBox Header="TargetHost"
+                         FontWeight="Light"
+                         Text="{x:Bind ViewModel.TargetLaunchHost,Mode=TwoWay}"
+                         Margin="0,0,0,10"/>-->
                 <TextBox Header="URI à lancer"
                          FontWeight="Light"
                          PlaceholderText="Saisir l'URI à lancer sur le device"
                          Text="{x:Bind ViewModel.TargetLaunchUri,Mode=TwoWay}" />
-                <StackPanel Orientation="Horizontal" Margin="0,2">
-                <Button Content="Décollage"
-                        Click="OnLaunchUriClicked" />
+                <StackPanel Orientation="Horizontal"
+                            Margin="0,2">
+                    <Button Content="Décollage"
+                            Click="{x:Bind ViewModel.LaunchUriAsync}" />
                     <Button Content="RAZ"
+                            Margin="5,0,0,0"
+                            Click="{x:Bind ViewModel.ResetLaunchUri}" />
+                    <Button Content="Local"
                             Margin="5,0"
-                            Click="OnLaunchUriRAZClicked" />
+                            Click="{x:Bind ViewModel.LaunchUriLocalAsync}" />
                 </StackPanel>
+
+
 
                 <TextBlock Foreground="OrangeRed"
                            Margin="0,10"
                            FontWeight="Light"
                            Text="{x:Bind ViewModel.LaunchRemoteUriResult,Mode=OneWay}" />
+                
+                
             </StackPanel>
 
         </PivotItem>
