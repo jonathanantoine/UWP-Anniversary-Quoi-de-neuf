@@ -101,6 +101,25 @@
     <Compile Include="Common\BooleanToSomethingConverter.cs" />
     <Compile Include="Common\DispatcherHelper.cs" />
     <Compile Include="Common\RemoteSystemStatusToColorConverter.cs" />
+    <Compile Include="Views\AccessText\AccessTextPage.xaml.cs">
+      <DependentUpon>AccessTextPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AccessText\ColorBloomTransitionHelper.cs" />
+    <Compile Include="Views\Composition\CompositionPage.xaml.cs">
+      <DependentUpon>CompositionPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Composition\ImageLoader.cs" />
+    <Compile Include="Views\Composition\ManagedSurface.cs" />
+    <Compile Include="Views\ConnectedAnimation\ConnectedAnimationDetail.xaml.cs">
+      <DependentUpon>ConnectedAnimationDetail.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConnectedAnimation\ConnectedAnimationPage.xaml.cs">
+      <DependentUpon>ConnectedAnimationPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConnectedAnimation\ConnectedAnimationShell.xaml.cs">
+      <DependentUpon>ConnectedAnimationShell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ConnectedAnimation\ConnectedAnimationViewModel.cs" />
     <Compile Include="Views\ConnectedApps\ConnectedAppPage.xaml.cs">
       <DependentUpon>ConnectedAppPage.xaml</DependentUpon>
     </Compile>
@@ -128,6 +147,11 @@
     <None Include="UWPWhatsNew_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Images\CircleOpacityMask.png" />
+    <Content Include="Assets\Images\ConnectedAnimation\1.jpg" />
+    <Content Include="Assets\Images\ConnectedAnimation\2.jpg" />
+    <Content Include="Assets\Images\ConnectedAnimation\3.jpg" />
+    <Content Include="Assets\Images\ConnectedAnimation\4.jpg" />
     <Content Include="Assets\Images\giphy.gif" />
     <Content Include="Assets\Images\IConAnimations.png" />
     <Content Include="Assets\Images\IconConnected.png" />
@@ -150,6 +174,26 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="Views\AccessText\AccessTextPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Composition\CompositionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConnectedAnimation\ConnectedAnimationDetail.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConnectedAnimation\ConnectedAnimationPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ConnectedAnimation\ConnectedAnimationShell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\ConnectedApps\ConnectedAppPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
