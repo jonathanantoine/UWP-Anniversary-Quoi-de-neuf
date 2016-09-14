@@ -2,13 +2,17 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
+using Windows.ApplicationModel.AppService;
+using Windows.ApplicationModel.Background;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
+using Windows.Storage;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -40,6 +44,62 @@ namespace UWPWhatsNew
 
         public Frame RootFrame { get; set; }
 
+        protected override void OnBackgroundActivated(BackgroundActivatedEventArgs args)
+        {
+            if (RootFrame == null)
+            {
+                return;
+            }
+            base.OnBackgroundActivated(args);
+            var instance = args.TaskInstance;
+
+            var details = instance.TriggerDetails as AppServiceTriggerDetails;
+            if (details != null)
+            {
+                CustomSnowFallFromAppServiceAsync(instance, details);
+            }
+        }
+
+        private static readonly HttpClient _DownloadHttpClient = new HttpClient();
+        private void CustomSnowFallFromAppServiceAsync(IBackgroundTaskInstance instance, AppServiceTriggerDetails details)
+        {
+            var def = instance.GetDeferral();
+            instance.Canceled += (_, __) => { def.Complete(); };
+            details.AppServiceConnection.RequestReceived += async (_, message) =>
+            {
+                var messageDef = message.GetDeferral();
+
+                try
+                {
+
+                    var targetUri = message.Request.Message.FirstOrDefault(kVp => kVp.Key == "targetUri").Value?.ToString();
+                    if (!string.IsNullOrEmpty(targetUri))
+                    {
+                        try
+                        {
+                            var downloadTask = _DownloadHttpClient.GetByteArrayAsync(targetUri);
+                            var targetFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(Guid.NewGuid().ToString("N"));
+
+                            var imageBytes = await downloadTask;
+
+                            await FileIO.WriteBytesAsync(targetFile, imageBytes);
+
+                            DispatcherHelper.CheckBeginInvokeOnUIAsync(() => SnowFallAsync(true, targetFile.Path));
+                        }
+                        finally
+                        {
+                            def.Complete();
+                        }
+                    }
+
+                }
+                finally
+                {
+                    messageDef.Complete();
+                }
+            };
+
+        }
 
         /// <summary>
         /// Invoked when the application is launched normally by the end user.  Other entry points
@@ -85,11 +145,6 @@ namespace UWPWhatsNew
                 RootFrame = new Frame();
 
                 RootFrame.NavigationFailed += OnNavigationFailed;
-
-                if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
-                {
-                    //TODO: Load state from previously suspended application
-                }
 
                 // Place the frame in the current Window
                 Window.Current.Content = RootFrame;
@@ -137,7 +192,7 @@ namespace UWPWhatsNew
         protected override void OnActivated(IActivatedEventArgs args)
         {
             base.OnActivated(args);
-            bool shouldDelay=RootFrame == null;
+            bool shouldDelay = RootFrame == null;
             InitializeFrame(args);
 
             var protocol = args as ProtocolActivatedEventArgs;
@@ -149,7 +204,7 @@ namespace UWPWhatsNew
         }
 
         private static readonly Random _Random = new Random((int)DateTime.UtcNow.Ticks);
-        private async Task SnowFallAsync(bool shouldDelay)
+        private async Task SnowFallAsync(bool shouldDelay, string imagePath = "")
         {
             if (shouldDelay)
             {
@@ -160,8 +215,8 @@ namespace UWPWhatsNew
             for (int i = 0; i < 12; i++)
             {
                 await Task.Delay(_Random.Next(50, 200));
-                panel?.Children.Add(new SnowFallUserControl());
-                panel?.Children.Add(new SnowFallUserControl());
+                panel?.Children.Add(new SnowFallUserControl(imagePath));
+                panel?.Children.Add(new SnowFallUserControl(imagePath));
             }
         }
     }

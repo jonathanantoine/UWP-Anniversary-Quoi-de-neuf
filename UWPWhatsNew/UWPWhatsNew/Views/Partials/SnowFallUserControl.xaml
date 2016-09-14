@@ -14,7 +14,7 @@
                                            Storyboard.TargetName="image">
                 <EasingDoubleKeyFrame KeyTime="0"
                                       Value="-200" />
-                <EasingDoubleKeyFrame KeyTime="0:0:0.9"
+                <EasingDoubleKeyFrame KeyTime="0:0:1.4"
                                       Value="800" />
             </DoubleAnimationUsingKeyFrames>
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(CompositeTransform.TranslateX)"
@@ -29,7 +29,7 @@
                                      Oscillations="2" />
                     </EasingDoubleKeyFrame.EasingFunction>
                 </EasingDoubleKeyFrame>
-                <EasingDoubleKeyFrame KeyTime="0:0:0.9"
+                <EasingDoubleKeyFrame KeyTime="0:0:1.4"
                                       Value="0" />
             </DoubleAnimationUsingKeyFrames>
         </Storyboard>

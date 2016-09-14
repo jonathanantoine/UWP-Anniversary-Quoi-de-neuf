@@ -7,6 +7,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:RemoteSystems="using:Windows.System.RemoteSystems"
       xmlns:Common="using:UWPWhatsNew.Common"
+      xmlns:System="using:System"
       mc:Ignorable="d">
     <Page.Resources>
         <Common:RemoteSystemStatusToColorConverter x:Key="RemoteSystemStatusToColorConverter" />
@@ -88,18 +89,34 @@
                             Click="{x:Bind ViewModel.LaunchUriLocalAsync}" />
                 </StackPanel>
 
-
-
                 <TextBlock Foreground="OrangeRed"
                            Margin="0,10"
                            FontWeight="Light"
                            Text="{x:Bind ViewModel.LaunchRemoteUriResult,Mode=OneWay}" />
-                
-                
+
             </StackPanel>
 
         </PivotItem>
         <PivotItem Header="APPSERVICE">
+            <GridView ItemsSource="{x:Bind ViewModel.AvailableImages,Mode=OneWay}"
+                      IsItemClickEnabled="True"
+                      ItemClick="{x:Bind ViewModel.LauncAppServiceAsync}">
+                <GridView.Header>
+                    <TextBlock Foreground="OrangeRed"
+                               Margin="0,10"
+                               FontWeight="Light"
+                               Text="{x:Bind ViewModel.LaunchRemoteAppServiceResult,Mode=OneWay}" />
+                </GridView.Header>
+                <GridView.ItemTemplate>
+                    <DataTemplate x:DataType="System:String">
+                        <Image Width="100"
+                               Height="100"
+                               Margin="2"
+                               Stretch="Uniform"
+                               Source="{x:Bind }"></Image>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
 
         </PivotItem>
     </Pivot>

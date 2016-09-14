@@ -4,8 +4,11 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.AppService;
+using Windows.Foundation.Collections;
 using Windows.System;
 using Windows.System.RemoteSystems;
+using Windows.UI.Xaml.Controls;
 using UWPWhatsNew.Common;
 using UWPWhatsNew.Common.AsyncHelpers;
 
@@ -20,8 +23,42 @@ namespace UWPWhatsNew.Views.ConnectedApps
         {
             ResetLaunchUri();
             ListDevicesAsync();
+            AvailableImages = new List<string>
+            {
+             "http://www2.mes-coloriages-preferes.biz/colorino/Images/Large/Personnages-feeriques-Licorne-117432.png",
+             "http://ideas.microsoft.fr/wp-content/uploads/2016/02/Logo-infinite-square.png",
+             "http://iconshow.me/media/images/xmas/standard-new-year-icons/256/Snowflake-icon.png",
+             "https://compass-ssl.microsoft.com/assets/a9/98/a9980443-667b-4bdf-a08d-0048ffa52ab7.png?n=Lumia-950-XL-catalogue-DSIM-white-offers.png",
+             "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/120px-Windows_logo_-_2012.svg.png",
+             "https://i.imgur.com/lbniOdx.png",
+             "http://pngimg.com/upload/cat_PNG1631.png",
+             "http://labs.sebastian-fuss.de/money/images/HighRes/euro2.jpg",
+             "http://www.hivingroom.com/boutique1/45-153-thickbox/pomme-a-glacons-rouge.jpg",
+             "http://www.zerodollartips.com/wp-content/uploads/2014/11/how-to-update-driver-software-on-windows-10-pc.jpg",
+             "http://assets2.howtospendit.ft-static.com/images/43/66/16/43661634-4f60-4a91-a445-d19d6c340b66_three_eighty.png",
+             "https://upload.wikimedia.org/wikipedia/commons/4/48/Xbox_icon.png"
+
+            };
         }
 
+        #region remote app service app properties
+        private string _launchRemoteAppServiceResult;
+        public string LaunchRemoteAppServiceResult
+        {
+            get { return _launchRemoteAppServiceResult; }
+            set { SetProperty(ref _launchRemoteAppServiceResult, value); }
+        }
+
+        private List<string> _availableImages;
+
+        public List<string> AvailableImages
+        {
+            get { return _availableImages; }
+            set { SetProperty(ref _availableImages, value); }
+        }
+
+
+        #endregion
         #region launch uri properties
 
         private string _targetLaunchHost;
@@ -192,6 +229,7 @@ namespace UWPWhatsNew.Views.ConnectedApps
                     LaunchRemoteUriResult = "Il faut sélectionner une cible...";
                     return;
                 }
+
                 if (!string.IsNullOrEmpty(TargetLaunchHost))
                 {
                     // construct a HostName object
@@ -218,7 +256,7 @@ namespace UWPWhatsNew.Views.ConnectedApps
                     .LaunchUriAsync(request, new Uri(TargetLaunchUri), options);
 
                 LaunchRemoteUriResult = "Appel en cours...";
-                var timeout = Task.Delay(7000);
+                var timeout = Task.Delay(13000);
                 await Task.WhenAny(timeout, launchUriTask.AsTask());
 
                 if (timeout.IsCompleted)
@@ -238,12 +276,77 @@ namespace UWPWhatsNew.Views.ConnectedApps
 
         public async Task LaunchUriLocalAsync()
         {
-            Launcher.LaunchUriAsync(new Uri(TargetLaunchUri));
+            await Launcher.LaunchUriAsync(new Uri(TargetLaunchUri));
         }
 
         public void ResetLaunchUri()
         {
             TargetLaunchUri = "td2016whatsnew://snowfall";
+        }
+
+        private readonly AsyncLock _launchAppServiceAsyncLock = new AsyncLock();
+        public async Task LauncAppServiceAsync(object sender, ItemClickEventArgs e)
+        {
+            using (await _launchAppServiceAsyncLock.LockAsync())
+            {
+                LaunchRemoteAppServiceResult = string.Empty;
+
+                var target = SelectedRemoteSystem;
+                if (target == null)
+                {
+                    LaunchRemoteAppServiceResult = "Il faut sélectionner une cible...";
+                    return;
+                }
+
+                var connection = new AppServiceConnection
+                {
+                    AppServiceName = "com.infinitesquare.CustomRain",
+                    PackageFamilyName = "UWPWhatsNew_n6jrw4wtwxjjj"
+                };
+
+                // Create a remote system connection request for the given remote device
+                var connectionRequest = new RemoteSystemConnectionRequest(target);
+
+                // "open" the AppServiceConnection using the remote request
+                var openRemoteTask = connection.OpenRemoteAsync(connectionRequest);
+
+                LaunchRemoteAppServiceResult = "Connexion en cours...";
+                var timeout = Task.Delay(13000);
+                await Task.WhenAny(timeout, openRemoteTask.AsTask());
+
+                if (timeout.IsCompleted)
+                {
+                    LaunchRemoteAppServiceResult = "Timeout...";
+                    return;
+                }
+
+                var result = await openRemoteTask;
+                if (result == AppServiceConnectionStatus.Success)
+                {
+                    LaunchRemoteAppServiceResult = "Connecté, envoi du message";
+
+                    var inputs = new ValueSet();
+
+                    // min_value and max_value vars are obtained somewhere else in the program
+                    inputs.Add("targetUri", e.ClickedItem.ToString());
+
+                    // send input and receive output in a variable
+                    var response = await connection.SendMessageAsync(inputs);
+
+                    if (response.Status != AppServiceResponseStatus.Success)
+                    {
+                        LaunchRemoteAppServiceResult = "Message envoyé ";
+                    }
+                    else
+                    {
+                        LaunchRemoteAppServiceResult = "Echec de l'envoi : " + result;
+                    }
+                }
+                else
+                {
+                    LaunchRemoteAppServiceResult = "Echec de connexion : " + result;
+                }
+            }
         }
     }
 }
