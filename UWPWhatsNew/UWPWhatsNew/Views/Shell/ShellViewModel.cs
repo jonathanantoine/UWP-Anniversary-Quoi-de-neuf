@@ -21,7 +21,7 @@ namespace UWPWhatsNew.Views
         {
             AvailableSamples = new List<AvailableItem<Type>>
             {
-                new AvailableItem<Type>("Animaged GIF", typeof(AnimatedGif.AnimatedGifPage),"/Assets/Images/IconGIF.png"),
+                new AvailableItem<Type>("Animated GIF", typeof(AnimatedGif.AnimatedGifPage),"/Assets/Images/IconGIF.png"),
                 new AvailableItem<Type>("Connected Apps", typeof(ConnectedApps.ConnectedAppPage),"/Assets/Images/IconConnected.png"),
                 new AvailableItem<Type>("Connected Apps", typeof(ConnectedApps.ConnectedAppPage),"/Assets/Images/IconSingleProcess.png"),
                 new AvailableItem<Type>("Connected Apps", typeof(ConnectedApps.ConnectedAppPage),"/Assets/Images/IconInk.png")
