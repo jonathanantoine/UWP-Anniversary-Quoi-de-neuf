@@ -44,7 +44,6 @@ namespace UWPWhatsNew.Views.ConnectedApps
 
         #endregion
 
-
         public ConnectedAppPage()
         {
             this.InitializeComponent();

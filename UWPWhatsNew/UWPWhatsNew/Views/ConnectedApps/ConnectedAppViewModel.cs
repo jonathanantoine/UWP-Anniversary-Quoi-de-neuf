@@ -143,7 +143,7 @@ namespace UWPWhatsNew.Views.ConnectedApps
                     var filter = new IRemoteSystemFilter[]
                     {
                         new RemoteSystemStatusTypeFilter(RemoteSystemStatusType.Available),
-                        new RemoteSystemDiscoveryTypeFilter(RemoteSystemDiscoveryType.Cloud),
+                        new RemoteSystemDiscoveryTypeFilter(RemoteSystemDiscoveryType.Any)
                     };
                     _watcher = RemoteSystem.CreateWatcher(filter);
                 }
@@ -249,7 +249,6 @@ namespace UWPWhatsNew.Views.ConnectedApps
                 var options = new RemoteLauncherOptions
                 {
                     FallbackUri = new Uri("http://infinitesquare.com"),
-                    PreferredAppIds = { "a7d1054a-8dc3-47e8-8d51-90d70a9f5a2f_n6jrw4wtwxjjj" }
                 };
 
                 var launchUriTask = Windows.System.RemoteLauncher
@@ -262,7 +261,6 @@ namespace UWPWhatsNew.Views.ConnectedApps
                 if (timeout.IsCompleted)
                 {
                     LaunchRemoteUriResult = "Timeout.... ";
-
                 }
                 else
                 {
@@ -332,7 +330,6 @@ namespace UWPWhatsNew.Views.ConnectedApps
 
                     // send input and receive output in a variable
                     var response = await connection.SendMessageAsync(inputs);
-
                     if (response.Status != AppServiceResponseStatus.Success)
                     {
                         LaunchRemoteAppServiceResult = "Message envoyé ";

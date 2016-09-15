@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10" xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3" IgnorableNamespaces="uap mp uap3">
-  <Identity Name="UWPWhatsNew" Publisher="CN=antoi" Version="1.0.0.0" />
+  <Identity Name="7630ArnaudAUBRUN.TD2016UWPWhatsNew" Publisher="CN=AFEA3618-FCED-4244-A01C-FE3393DAE7A2" Version="1.1.0.0" />
   <mp:PhoneIdentity PhoneProductId="a7d1054a-8dc3-47e8-8d51-90d70a9f5a2f" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
-    <DisplayName>UWPWhatsNew</DisplayName>
-    <PublisherDisplayName>antoi</PublisherDisplayName>
+    <DisplayName>TD2016UWPWhatsNew</DisplayName>
+    <PublisherDisplayName>Arnaud AUBRUN</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
@@ -21,9 +21,6 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
-        <uap:Extension Category="windows.appService">
-          <uap3:AppService Name="com.infinitesquare.CustomRain" SupportsRemoteSystems="true" />
-        </uap:Extension>
         <uap:Extension Category="windows.protocol">
           <uap:Protocol Name="td2016whatsnew">
             <uap:Logo>Assets\Images\unicorn.png</uap:Logo>
