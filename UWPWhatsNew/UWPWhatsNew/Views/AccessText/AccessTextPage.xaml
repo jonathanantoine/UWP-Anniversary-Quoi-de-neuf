@@ -6,16 +6,14 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d">
 
-
     <Grid Background="Transparent"
           x:Name="UICanvas"
           SizeChanged="UICanvas_SizeChanged">
-
-        <!-- This element hosts the Visuals. Lays out below the Pivot in z-order within the same Grid cell -->
+        
         <Rectangle x:Name="hostForVisual"
                    Fill="Transparent" />
 
-        <Button Content="Bouton avec raccourcit clavier : 'ALT C'"
+        <Button Content="Bouton avec raccourci clavier : 'ALT C'"
                 AccessKey="C"
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"

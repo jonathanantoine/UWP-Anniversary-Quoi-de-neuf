@@ -19,6 +19,14 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
         public ConnectedAnimationDetail()
         {
             InitializeComponent();
+            Loaded += ConnectedAnimationDetail_Loaded
+                ;
+        }
+
+        private void ConnectedAnimationDetail_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+            var img = _image;
+            if (img.Parent != null) {}
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

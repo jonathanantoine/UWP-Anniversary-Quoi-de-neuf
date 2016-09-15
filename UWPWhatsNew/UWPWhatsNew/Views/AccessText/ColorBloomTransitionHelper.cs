@@ -155,8 +155,6 @@ namespace UWPWhatsNew.Views.AccessText
         private CompositionEffectBrush CreateCircleBrushWithColor(Windows.UI.Color color)
         {
 
-            var colorBrush = _compositor.CreateColorBrush(color);
-
             //
             // Because Windows.UI.Composition does not have a Circle visual, we will 
             // work around by using a circular opacity mask
@@ -242,7 +240,7 @@ namespace UWPWhatsNew.Views.AccessText
                 _containerForVisuals.Children.Remove(colorVisual);
 
                 // notify interested parties
-                ColorBloomTransitionCompleted(this, EventArgs.Empty);
+                ColorBloomTransitionCompleted?.Invoke(this, EventArgs.Empty);
             };
 
             batchTransaction.End();

@@ -18,7 +18,7 @@ namespace UWPWhatsNew
             this.InitializeComponent();
             ViewModel = DataContext as ShellViewModel;
             NavigationFrame.Navigate(typeof(HomePage));
-            Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
+            //Windows.UI.Core.SystemNavigationManager.GetForCurrentView().BackRequested += OnBackRequested;
             //NavigationFrame.Navigated += NavigationFrame_Navigated;
         }
 
