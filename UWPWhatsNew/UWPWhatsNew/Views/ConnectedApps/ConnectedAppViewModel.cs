@@ -34,7 +34,7 @@ namespace UWPWhatsNew.Views.ConnectedApps
              "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5f/Windows_logo_-_2012.svg/120px-Windows_logo_-_2012.svg.png",
              "https://i.imgur.com/lbniOdx.png",
              "http://pngimg.com/upload/cat_PNG1631.png",
-             "http://labs.sebastian-fuss.de/money/images/HighRes/euro2.jpg",
+             "https://openclipart.org/image/2400px/svg_to_png/184667/2euro.png",
              "http://www.hivingroom.com/boutique1/45-153-thickbox/pomme-a-glacons-rouge.jpg",
              "http://www.zerodollartips.com/wp-content/uploads/2014/11/how-to-update-driver-software-on-windows-10-pc.jpg",
              "http://assets2.howtospendit.ft-static.com/images/43/66/16/43661634-4f60-4a91-a445-d19d6c340b66_three_eighty.png",
