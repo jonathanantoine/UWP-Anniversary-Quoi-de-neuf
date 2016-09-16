@@ -24,25 +24,29 @@ namespace UWPWhatsNew.Views.Partials
         public SnowFallUserControl()
         {
             this.InitializeComponent();
-            Loaded += SnowFallUserControl_Loaded;
+            Loaded += OnSnowFallUserControlLoaded;
         }
 
-        public SnowFallUserControl(string changeImage) : this()
+        public SnowFallUserControl(BitmapImage changeImage) : this()
         {
-            image.Source = new BitmapImage(new Uri(changeImage));
+            if (changeImage != null)
+            {
+                image.Source = changeImage;
+            }
         }
 
         private static readonly Random _Random = new Random((int)DateTime.UtcNow.Ticks);
-        private async void SnowFallUserControl_Loaded(object sender, RoutedEventArgs e)
+        private void OnSnowFallUserControlLoaded(object sender, RoutedEventArgs e)
         {
             var left = _Random.Next(-50, (int)(ActualWidth - 100));
             image.Margin = new Thickness(left, 0, 0, 0);
-            LetItSnowStoryboard.Completed += LetItSnowStoryboard_Completed;
+            LetItSnowStoryboard.Completed += OnLetItSnowStoryboardCompleted;
             LetItSnowStoryboard.Begin();
         }
 
-        private void LetItSnowStoryboard_Completed(object sender, object e)
+        private void OnLetItSnowStoryboardCompleted(object sender, object e)
         {
+            LetItSnowStoryboard.Completed -= OnLetItSnowStoryboardCompleted;
             ((Panel)Parent).Children.Remove(this);
         }
     }

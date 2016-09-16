@@ -20,6 +20,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using UWPWhatsNew.Common;
 using UWPWhatsNew.Views.Partials;
@@ -61,41 +62,50 @@ namespace UWPWhatsNew
         }
 
         private static readonly HttpClient _DownloadHttpClient = new HttpClient();
-        private void CustomSnowFallFromAppServiceAsync(IBackgroundTaskInstance instance, AppServiceTriggerDetails details)
+
+        private void CustomSnowFallFromAppServiceAsync(
+            IBackgroundTaskInstance instance,
+            AppServiceTriggerDetails details)
         {
             var def = instance.GetDeferral();
             instance.Canceled += (_, __) => { def.Complete(); };
             details.AppServiceConnection.RequestReceived += async (_, message) =>
             {
                 var messageDef = message.GetDeferral();
-
                 try
                 {
-
-                    var targetUri = message.Request.Message.FirstOrDefault(kVp => kVp.Key == "targetUri").Value?.ToString();
-                    if (!string.IsNullOrEmpty(targetUri))
+                    try
                     {
-                        try
+                        // lecture du message
+                        var targetUri = message.Request.Message.FirstOrDefault(kVp => kVp.Key == "targetUri").Value?.ToString();
+                        if (!string.IsNullOrEmpty(targetUri))
                         {
-                            var downloadTask = _DownloadHttpClient.GetByteArrayAsync(targetUri);
-                            var targetFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(Guid.NewGuid().ToString("N"));
 
-                            var imageBytes = await downloadTask;
+                            // Uri locale = pas de téléchargement
+                            if (targetUri.StartsWith("ms-appx"))
+                            {
+                                DispatcherHelper.CheckBeginInvokeOnUIAsync(() => SnowFallAsync(true, new BitmapImage(new Uri(targetUri))));
+                                return;
+                            }
 
-                            await FileIO.WriteBytesAsync(targetFile, imageBytes);
+                            // téléchargement local de l'image
+                            var image = await Microsoft.Toolkit.Uwp.UI.ImageCache.GetFromCacheAsync(new Uri(targetUri));
 
-                            DispatcherHelper.CheckBeginInvokeOnUIAsync(() => SnowFallAsync(true, targetFile.Path));
+                            DispatcherHelper.CheckBeginInvokeOnUIAsync(() => SnowFallAsync(true, image));
+
                         }
-                        finally
-                        {
-                            def.Complete();
-                        }
+
                     }
-
+                    finally
+                    {
+                        // fermeture du message
+                        messageDef.Complete();
+                    }
                 }
                 finally
                 {
-                    messageDef.Complete();
+                    // On ne fera pas d'autres communications
+                    def.Complete();
                 }
             };
 
@@ -204,7 +214,7 @@ namespace UWPWhatsNew
         }
 
         private static readonly Random _Random = new Random((int)DateTime.UtcNow.Ticks);
-        private async Task SnowFallAsync(bool shouldDelay, string imagePath = "")
+        private async Task SnowFallAsync(bool shouldDelay, BitmapImage image = null)
         {
             if (shouldDelay)
             {
@@ -215,8 +225,8 @@ namespace UWPWhatsNew
             for (int i = 0; i < 12; i++)
             {
                 await Task.Delay(_Random.Next(50, 200));
-                panel?.Children.Add(new SnowFallUserControl(imagePath));
-                panel?.Children.Add(new SnowFallUserControl(imagePath));
+                panel?.Children.Add(new SnowFallUserControl(image));
+                panel?.Children.Add(new SnowFallUserControl(image));
             }
         }
     }

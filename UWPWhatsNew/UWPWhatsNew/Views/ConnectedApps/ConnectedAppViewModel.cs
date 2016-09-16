@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
 using Windows.ApplicationModel.AppService;
 using Windows.Foundation.Collections;
 using Windows.System;
@@ -25,6 +26,7 @@ namespace UWPWhatsNew.Views.ConnectedApps
             ListDevicesAsync();
             AvailableImages = new List<string>
             {
+                "ms-appx:///Assets/Images/unicorn.png",
              "http://www2.mes-coloriages-preferes.biz/colorino/Images/Large/Personnages-feeriques-Licorne-117432.png",
              "http://ideas.microsoft.fr/wp-content/uploads/2016/02/Logo-infinite-square.png",
              "http://iconshow.me/media/images/xmas/standard-new-year-icons/256/Snowflake-icon.png",
@@ -117,6 +119,7 @@ namespace UWPWhatsNew.Views.ConnectedApps
         }
         #endregion
 
+        #region Listing
         private async Task ListDevicesAsync()
         {
             using (await _listDevicesAsyncLock.LockAsync())
@@ -149,11 +152,13 @@ namespace UWPWhatsNew.Views.ConnectedApps
                 }
                 else
                 {
-                    _watcher = RemoteSystem.CreateWatcher();
+                    var watcher = RemoteSystem.CreateWatcher();
+                    watcher.RemoteSystemAdded += OnWatcherRemoteSystemAdded;
+                    watcher.RemoteSystemRemoved += OnWatcherRemoteSystemRemoved;
                 }
 
-                _watcher.RemoteSystemAdded += OnWatcherRemoteSystemAdded;
-                _watcher.RemoteSystemRemoved += OnWatcherRemoteSystemRemoved;
+
+
                 _watcher.RemoteSystemUpdated += OnWatcher_RemoteSystemUpdated;
 
                 _watcher.Start();
@@ -215,6 +220,9 @@ namespace UWPWhatsNew.Views.ConnectedApps
                 RemoteSystems.Add(args.RemoteSystem);
             });
         }
+        #endregion
+
+        #region LaunchUri
 
         private readonly AsyncLock _launchUriAsyncLock = new AsyncLock();
         public async Task LaunchUriAsync()
@@ -244,15 +252,12 @@ namespace UWPWhatsNew.Views.ConnectedApps
                         target = remotesys;
                     }
                 }
+                var targetRs = RemoteSystems
+                    .FirstOrDefault(r => r.Status == RemoteSystemStatus.Available);
+                var request = new RemoteSystemConnectionRequest(targetRs);
+                var uri = new Uri(TargetLaunchUri);
 
-                var request = new RemoteSystemConnectionRequest(target);
-                var options = new RemoteLauncherOptions
-                {
-                    FallbackUri = new Uri("http://infinitesquare.com"),
-                };
-
-                var launchUriTask = Windows.System.RemoteLauncher
-                    .LaunchUriAsync(request, new Uri(TargetLaunchUri), options);
+                var launchUriTask = RemoteLauncher.LaunchUriAsync(request, uri);
 
                 LaunchRemoteUriResult = "Appel en cours...";
                 var timeout = Task.Delay(13000);
@@ -282,6 +287,9 @@ namespace UWPWhatsNew.Views.ConnectedApps
             TargetLaunchUri = "td2016whatsnew://snowfall";
         }
 
+        #endregion
+
+        #region Remote AppService
         private readonly AsyncLock _launchAppServiceAsyncLock = new AsyncLock();
         public async Task LauncAppServiceAsync(object sender, ItemClickEventArgs e)
         {
@@ -299,7 +307,7 @@ namespace UWPWhatsNew.Views.ConnectedApps
                 var connection = new AppServiceConnection
                 {
                     AppServiceName = "com.infinitesquare.CustomRain",
-                    PackageFamilyName = "UWPWhatsNew_n6jrw4wtwxjjj"
+                    PackageFamilyName = Package.Current.Id.FamilyName
                 };
 
                 // Create a remote system connection request for the given remote device
@@ -345,5 +353,6 @@ namespace UWPWhatsNew.Views.ConnectedApps
                 }
             }
         }
+        #endregion
     }
 }
