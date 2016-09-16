@@ -304,16 +304,17 @@ namespace UWPWhatsNew.Views.ConnectedApps
                     return;
                 }
 
+                // Création d'une reqûete
+                var connectionRequest = new RemoteSystemConnectionRequest(target);
+
+                // création d'une connexion
                 var connection = new AppServiceConnection
                 {
                     AppServiceName = "com.infinitesquare.CustomRain",
                     PackageFamilyName = Package.Current.Id.FamilyName
                 };
 
-                // Create a remote system connection request for the given remote device
-                var connectionRequest = new RemoteSystemConnectionRequest(target);
-
-                // "open" the AppServiceConnection using the remote request
+                // ouverture de la connexion
                 var openRemoteTask = connection.OpenRemoteAsync(connectionRequest);
 
                 LaunchRemoteAppServiceResult = "Connexion en cours...";

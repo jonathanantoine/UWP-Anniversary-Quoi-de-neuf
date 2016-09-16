@@ -69,7 +69,7 @@ namespace UWPWhatsNew
         {
             var def = instance.GetDeferral();
             instance.Canceled += (_, __) => { def.Complete(); };
-            details.AppServiceConnection.RequestReceived += async (_, message) =>
+            details.AppServiceConnection.RequestReceived += (_, message) =>
             {
                 var messageDef = message.GetDeferral();
                 try
@@ -88,10 +88,14 @@ namespace UWPWhatsNew
                                 return;
                             }
 
-                            // téléchargement local de l'image
-                            var image = await Microsoft.Toolkit.Uwp.UI.ImageCache.GetFromCacheAsync(new Uri(targetUri));
+                            DispatcherHelper.CheckBeginInvokeOnUIAsync(
+                                async () =>
+                                {
+                                    // téléchargement local de l'image
+                                    var image = await Microsoft.Toolkit.Uwp.UI.ImageCache.GetFromCacheAsync(new Uri(targetUri));
 
-                            DispatcherHelper.CheckBeginInvokeOnUIAsync(() => SnowFallAsync(true, image));
+                                    SnowFallAsync(true, image);
+                                });
 
                         }
 
