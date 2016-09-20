@@ -1,0 +1,47 @@
+﻿<Page x:Class="UWPWhatsNew.Views.InkToolbar.InkToolbarPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:UWPWhatsNew.Views.InkToolbar"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d">
+    <Page.Resources>
+        <BrushCollection x:Key="PenBrushCollection">
+            <SolidColorBrush Color="Pink" />
+            <SolidColorBrush Color="HotPink" />
+            <SolidColorBrush Color="LightPink" />
+            <SolidColorBrush Color="DeepPink" />
+        </BrushCollection>
+    </Page.Resources>
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+        <InkCanvas x:Name="_inkCanvas" />
+        <InkToolbar x:Name="_inkToolbar"
+                    VerticalAlignment="Top"
+                    InitialControls="None"
+                    TargetInkCanvas="{x:Bind _inkCanvas}">
+
+            <InkToolbarBallpointPenButton />
+            <InkToolbarHighlighterButton MinStrokeWidth="4"
+                                         MaxStrokeWidth="200" />
+            <InkToolbarEraserButton />
+            <InkToolbarRulerButton />
+
+            <InkToolbarCustomPenButton MinStrokeWidth="1"
+                                       MaxStrokeWidth="3"
+                                       SelectedStrokeWidth="2"
+                                       SelectedBrushIndex="1"
+                                       Palette="{StaticResource PenBrushCollection}">
+              <InkToolbarCustomPenButton.CustomPen>
+                    <local:UnicornPen />
+                </InkToolbarCustomPenButton.CustomPen>
+                <SymbolIcon Symbol="Favorite" />
+                <InkToolbarCustomPenButton.ConfigurationContent>
+                    <InkToolbarPenConfigurationControl />
+                </InkToolbarCustomPenButton.ConfigurationContent>
+            </InkToolbarCustomPenButton>
+
+        </InkToolbar>
+
+    </Grid>
+</Page>

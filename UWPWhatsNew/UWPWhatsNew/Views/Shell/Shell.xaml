@@ -6,9 +6,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
       xmlns:views="using:UWPWhatsNew.Views"
+      xmlns:Shell="using:UWPWhatsNew.Views.Shell"
       mc:Ignorable="d">
     <Page.DataContext>
-        <views:ShellViewModel />
+        <Shell:ShellViewModel />
     </Page.DataContext>
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 

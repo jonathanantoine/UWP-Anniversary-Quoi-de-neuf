@@ -1,12 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UWPWhatsNew.Common;
-using UWPWhatsNew.Views.Shell;
 
-namespace UWPWhatsNew.Views
+namespace UWPWhatsNew.Views.Shell
 {
     public class ShellViewModel : BindableBase
     {
@@ -27,7 +23,7 @@ namespace UWPWhatsNew.Views
                 new AvailableItem<Type>("ConnectedAnimation", typeof(ConnectedAnimation.ConnectedAnimationPage),"/Assets/Images/IconAnimation.png"),
                 new AvailableItem<Type>("Connected Apps", typeof(ConnectedApps.ConnectedAppPage),"/Assets/Images/IconConnected.png"),
                 new AvailableItem<Type>("Single Process Model", typeof(ConnectedApps.ConnectedAppPage),"/Assets/Images/IconSingleProcess.png"),
-                new AvailableItem<Type>("Connected Apps", typeof(ConnectedApps.ConnectedAppPage),"/Assets/Images/IconInk.png")
+                new AvailableItem<Type>("InkToolbar", typeof(InkToolbar.InkToolbarPage),"/Assets/Images/IconInk.png")
 
             };
         }

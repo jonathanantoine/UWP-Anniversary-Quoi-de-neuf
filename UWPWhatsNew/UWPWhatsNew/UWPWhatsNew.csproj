@@ -128,6 +128,10 @@
     <Compile Include="Views\Home\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\InkToolbar\InkToolbarPage.xaml.cs">
+      <DependentUpon>InkToolbarPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\InkToolbar\UnicornPen.cs" />
     <Compile Include="Views\Partials\SnowFallUserControl.xaml.cs">
       <DependentUpon>SnowFallUserControl.xaml</DependentUpon>
     </Compile>
@@ -213,6 +217,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Home\HomePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\InkToolbar\InkToolbarPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
