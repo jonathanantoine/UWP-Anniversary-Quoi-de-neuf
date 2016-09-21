@@ -111,6 +111,7 @@
     </Compile>
     <Compile Include="Views\Composition\ImageLoader.cs" />
     <Compile Include="Views\Composition\ManagedSurface.cs" />
+    <Compile Include="Views\ConnectedAnimation\ConnectedAnimationData.cs" />
     <Compile Include="Views\ConnectedAnimation\ConnectedAnimationDetail.xaml.cs">
       <DependentUpon>ConnectedAnimationDetail.xaml</DependentUpon>
     </Compile>
@@ -150,19 +151,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Images\CircleOpacityMask.png" />
-    <Content Include="Assets\Images\ConnectedAnimation\1.jpg" />
-    <Content Include="Assets\Images\ConnectedAnimation\2.jpg" />
-    <Content Include="Assets\Images\ConnectedAnimation\3.jpg" />
-    <Content Include="Assets\Images\ConnectedAnimation\4.jpg" />
     <Content Include="Assets\Images\ConnectedAnimation\s1.jpg" />
     <Content Include="Assets\Images\ConnectedAnimation\s2.jpg" />
-    <Content Include="Assets\Images\ConnectedAnimation\s3.jpg" />
+    <Content Include="Assets\Images\ConnectedAnimation\s3.png" />
     <Content Include="Assets\Images\ConnectedAnimation\s4.png" />
     <Content Include="Assets\Images\ConnectedAnimation\s5.png" />
     <Content Include="Assets\Images\ConnectedAnimation\u1.png" />
     <Content Include="Assets\Images\ConnectedAnimation\u2.jpg" />
     <Content Include="Assets\Images\ConnectedAnimation\u3.png" />
-    <Content Include="Assets\Images\ConnectedAnimation\u4.jpg" />
     <Content Include="Assets\Images\giphy.gif" />
     <Content Include="Assets\Images\IconAccessText.png" />
     <Content Include="Assets\Images\IconAnimation.png" />

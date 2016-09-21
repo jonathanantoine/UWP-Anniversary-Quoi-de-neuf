@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UWPWhatsNew.Common;
 using UWPWhatsNew.Views.Shell;
 
@@ -28,7 +25,6 @@ namespace UWPWhatsNew.Views
                 new AvailableItem<Type>("Connected Apps", typeof(ConnectedApps.ConnectedAppPage),"/Assets/Images/IconConnected.png"),
                 new AvailableItem<Type>("Single Process Model", typeof(ConnectedApps.ConnectedAppPage),"/Assets/Images/IconSingleProcess.png"),
                 new AvailableItem<Type>("Connected Apps", typeof(ConnectedApps.ConnectedAppPage),"/Assets/Images/IconInk.png")
-
             };
         }
     }

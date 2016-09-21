@@ -1,26 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
+//Code inspiré des exemples de : https://github.com/Microsoft/WindowsUIDevLabs
 namespace UWPWhatsNew.Views.AccessText
 {
-
-    //Code inspiré des exemples de : https://github.com/Microsoft/WindowsUIDevLabs
-
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
@@ -90,16 +76,16 @@ namespace UWPWhatsNew.Views.AccessText
             _index++;
             var currentIndex = _index;
 
-            var header = sender as Button;
+            var button = sender as Button;
 
-            var headerPosition = header.TransformToVisual(UICanvas).TransformPoint(new Windows.Foundation.Point(0d, 0d));
+            var buttonPosition = button.TransformToVisual(UICanvas).TransformPoint(new Windows.Foundation.Point(0d, 0d));
 
             var initialBounds = new Windows.Foundation.Rect()  // maps to a rectangle the size of the header
             {
-                Width = header.RenderSize.Width,
-                Height = header.RenderSize.Height,
-                X = headerPosition.X,
-                Y = headerPosition.Y
+                Width = button.RenderSize.Width,
+                Height = button.RenderSize.Height,
+                X = buttonPosition.X + button.ActualWidth / 2,
+                Y = buttonPosition.Y + button.ActualHeight / 2
             };
 
             _queue.Enqueue(currentIndex);
