@@ -19,14 +19,13 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
         public ConnectedAnimationDetail()
         {
             InitializeComponent();
-            Loaded += ConnectedAnimationDetail_Loaded
-                ;
+            Loaded += ConnectedAnimationDetail_Loaded;
         }
 
         private void ConnectedAnimationDetail_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             var img = _image;
-            if (img.Parent != null) {}
+            if (img.Parent != null) { }
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
@@ -36,17 +35,19 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
 
             _image.Source = new BitmapImage(new Uri((string)e.Parameter));
 
-            var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("Image");
-            if (animation != null)
+            if (ConnectedAnimationData.AnimationIsEnabled)
             {
-                _image.Opacity = 0;
-                _image.ImageOpened += (sender_, e_) =>
+                var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("Image");
+                if (animation != null)
                 {
-                    _image.Opacity = 1;
-                    animation.TryStart(_image);
-                };
+                    _image.Opacity = 0;
+                    _image.ImageOpened += (sender_, e_) =>
+                    {
+                        _image.Opacity = 1;
+                        animation.TryStart(_image);
+                    };
+                }
             }
-
             _systemNavigationManager.BackRequested += ConnectedAnimationDetail_BackRequested;
             _systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
@@ -67,10 +68,11 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
             }
 
             var img = _image;
-            if (img.Parent != null)
+            if (img.Parent != null && ConnectedAnimationData.AnimationIsEnabled)
             {
                 ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("Image", img);
             }
+
             e.Handled = true;
             Frame.GoBack();
         }

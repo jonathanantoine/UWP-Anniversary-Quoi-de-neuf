@@ -1,6 +1,7 @@
 ﻿using Windows.Foundation.Metadata;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media.Imaging;
 
 namespace UWPWhatsNew.Views.AnimatedGif
 {
@@ -21,7 +22,6 @@ namespace UWPWhatsNew.Views.AnimatedGif
         {
             return ApiInformation.IsPropertyPresent("Windows.UI.Xaml.Media.Imaging.BitmapImage", "IsAnimatedBitmap");
         }
-
         private void Pause_Click(object sender, RoutedEventArgs e)
         {
             if (HaveAnimatedBitmapInAPI())

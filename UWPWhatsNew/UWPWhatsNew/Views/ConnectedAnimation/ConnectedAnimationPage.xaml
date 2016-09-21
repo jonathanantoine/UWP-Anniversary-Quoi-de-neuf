@@ -18,7 +18,8 @@
                   IsItemClickEnabled="True"
                   ItemClick="ItemsGridView_ItemClick"
                   Margin="50"
-                  ItemsSource="{x:Bind ViewModel.Items}">
+                  ItemsSource="{x:Bind ViewModel.Items}"
+                  Grid.Row="1">
             <GridView.ItemContainerTransitions>
                 <TransitionCollection>
                     <EntranceThemeTransition x:Name="EntranceTransition" />
@@ -27,7 +28,6 @@
 
             <GridView.ItemTemplate>
                 <DataTemplate x:DataType="data:Thumbnail">
-
                     <Border BorderBrush="Black"
                             BorderThickness="1">
                         <Image x:Name="ImageItem"
@@ -37,9 +37,15 @@
                                Stretch="Uniform"
                                Source="{x:Bind ImageUrl}" />
                     </Border>
-
                 </DataTemplate>
             </GridView.ItemTemplate>
         </GridView>
+
+        <CheckBox x:Name="enableAnimation"
+                  Content="Activer la connected animation"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Bottom"
+                  IsChecked="True"
+                  Margin="0,0,0,20" />
     </Grid>
 </Page>
