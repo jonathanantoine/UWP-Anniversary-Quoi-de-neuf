@@ -124,9 +124,6 @@
     <Compile Include="Views\ConnectedAnimation\ConnectedAnimationPage.xaml.cs">
       <DependentUpon>ConnectedAnimationPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\ConnectedAnimation\ConnectedAnimationShell.xaml.cs">
-      <DependentUpon>ConnectedAnimationShell.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\ConnectedAnimation\ConnectedAnimationViewModel.cs" />
     <Compile Include="Views\ConnectedApps\ConnectedAppPage.xaml.cs">
       <DependentUpon>ConnectedAppPage.xaml</DependentUpon>
@@ -173,6 +170,7 @@
     <Content Include="Assets\Images\IconAccessText.png" />
     <Content Include="Assets\Images\IconAnimation.png" />
     <Content Include="Assets\Images\IConAnimations.png" />
+    <Content Include="Assets\Images\IconComposition.png" />
     <Content Include="Assets\Images\IconConnected.png" />
     <Content Include="Assets\Images\IconExtensibility.png" />
     <Content Include="Assets\Images\IconGIF.png" />
@@ -211,10 +209,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ConnectedAnimation\ConnectedAnimationPage.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Views\ConnectedAnimation\ConnectedAnimationShell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

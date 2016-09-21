@@ -5,7 +5,9 @@ using System.Linq;
 using Windows.UI.Xaml.Navigation;
 using Windows.UI.Core;
 using System;
+using System.ComponentModel;
 using System.Numerics;
+using System.Threading.Tasks;
 using Windows.UI.Composition;
 using Windows.UI.Xaml.Hosting;
 
@@ -61,13 +63,15 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
             var item = (Thumbnail)e.ClickedItem;
 
             // Add a fade out effect
-            Transitions = new TransitionCollection();
-            Transitions.Add(new ContentThemeTransition());
+            Transitions = new TransitionCollection
+            {
+                new ContentThemeTransition()
+            };
             _navigatedUri = item.ImageUrl;
             Frame.Navigate(typeof(ConnectedAnimationDetail), _navigatedUri);
         }
 
-        private void ItemsGridView_Loaded(object sender, RoutedEventArgs e)
+        private async void ItemsGridView_Loaded(object sender, RoutedEventArgs e)
         {
             if (ConnectedAnimationData.AnimationIsEnabled)
             {
@@ -77,11 +81,12 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
                     var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("Image");
                     if (animation != null)
                     {
-                        var item = ViewModel.Items.Where(compare => compare.ImageUrl == _navigatedUri).First();
+                        var item = ViewModel.Items.First(compare => compare.ImageUrl == _navigatedUri);
 
                         //on scroll vers l'item
                         ItemsGridView.ScrollIntoView(item, ScrollIntoViewAlignment.Default);
-                        ItemsGridView.UpdateLayout();
+
+                        await Task.Yield();
 
                         var container = ItemsGridView.ContainerFromItem(item) as GridViewItem;
                         if (container != null)
