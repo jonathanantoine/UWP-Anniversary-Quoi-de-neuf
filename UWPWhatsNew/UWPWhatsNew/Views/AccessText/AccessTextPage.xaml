@@ -8,7 +8,7 @@
 
     <Grid Background="Transparent"
           x:Name="UICanvas"
-          SizeChanged="UICanvas_SizeChanged">
+          SizeChanged="UICanvas_OnzeChanged">
         
         <Rectangle x:Name="hostForVisual"
                    Fill="Transparent" />
@@ -18,7 +18,7 @@
                 VerticalAlignment="Center"
                 HorizontalAlignment="Center"
                 FontSize="20"
-                Click="Header_Click"/>
+                Click="OnButtonClick"/>
 
     </Grid>
 

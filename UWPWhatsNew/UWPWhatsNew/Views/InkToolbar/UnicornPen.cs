@@ -18,15 +18,18 @@ namespace UWPWhatsNew.Views.InkToolbar
         {
             InkDrawingAttributes inkDrawingAttributes = new InkDrawingAttributes();
             inkDrawingAttributes.PenTip = PenTipShape.Circle;
+
+
             inkDrawingAttributes.Size = new Windows.Foundation.Size(strokeWidth, strokeWidth * 20);
             SolidColorBrush solidColorBrush = brush as SolidColorBrush;
-            inkDrawingAttributes.Color = solidColorBrush != null ? solidColorBrush.Color : Colors.DeepPink;
+            inkDrawingAttributes.Color = solidColorBrush?.Color ?? Colors.DeepPink;
 
             Matrix3x2 matrix = Matrix3x2.CreateRotation(45);
             inkDrawingAttributes.PenTipTransform = matrix;
 
             return inkDrawingAttributes;
         }
+
     }
 
 }

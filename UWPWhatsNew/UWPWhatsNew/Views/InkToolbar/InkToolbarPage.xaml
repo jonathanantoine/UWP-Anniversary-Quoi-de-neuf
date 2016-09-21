@@ -18,7 +18,6 @@
         <InkCanvas x:Name="_inkCanvas" />
         <InkToolbar x:Name="_inkToolbar"
                     VerticalAlignment="Top"
-                    InitialControls="None"
                     TargetInkCanvas="{x:Bind _inkCanvas}">
 
             <InkToolbarBallpointPenButton />
@@ -32,7 +31,7 @@
                                        SelectedStrokeWidth="2"
                                        SelectedBrushIndex="1"
                                        Palette="{StaticResource PenBrushCollection}">
-              <InkToolbarCustomPenButton.CustomPen>
+                <InkToolbarCustomPenButton.CustomPen>
                     <local:UnicornPen />
                 </InkToolbarCustomPenButton.CustomPen>
                 <SymbolIcon Symbol="Favorite" />
