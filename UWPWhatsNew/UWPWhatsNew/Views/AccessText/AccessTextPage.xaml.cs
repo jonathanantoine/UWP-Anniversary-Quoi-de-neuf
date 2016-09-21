@@ -71,7 +71,7 @@ namespace UWPWhatsNew.Views.AccessText
         /// This is achieved by creating a circular solid colored visual directly underneath the
         /// Pivot header which was clicked, and animating its scale so that it floods a designated bounding box. 
         /// </summary>
-        private void Header_Click(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void OnButtonClick(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
             _index++;
             var currentIndex = _index;

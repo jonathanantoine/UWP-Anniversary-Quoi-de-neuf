@@ -8,7 +8,7 @@
 
     <Grid Background="Transparent"
           x:Name="UICanvas"
-          SizeChanged="UICanvas_OnzeChanged">
+          SizeChanged="UICanvas_SizeChanged">
         
         <Rectangle x:Name="hostForVisual"
                    Fill="Transparent" />
