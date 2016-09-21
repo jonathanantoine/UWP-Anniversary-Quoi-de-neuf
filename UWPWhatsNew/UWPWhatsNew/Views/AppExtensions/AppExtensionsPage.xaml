@@ -38,6 +38,8 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="40" />
                             <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+
                         </Grid.ColumnDefinitions>
 
                         <Image Width="36"
@@ -45,7 +47,7 @@
                                VerticalAlignment="Center"
                                HorizontalAlignment="Center"
                                Source="{x:Bind Converter={StaticResource LoadAppExtensionLogoConverter}}" />
-                        
+
                         <StackPanel Grid.Column="1"
                                     Margin="4,0,0,0"
                                     Orientation="Vertical">
@@ -55,6 +57,11 @@
                                        FontWeight="Light"
                                        Margin="0,-4,0,0" />
                         </StackPanel>
+                        <Button Grid.Column="2"
+                                VerticalAlignment="Center"
+                                Margin="5"
+                                Content="Supprimer"
+                                Click="OnRemoveExtensionClicked" />
                     </Grid>
 
                 </DataTemplate>

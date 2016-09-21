@@ -1,4 +1,5 @@
 ﻿using Windows.ApplicationModel.AppExtensions;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
 namespace UWPWhatsNew.Views.AppExtensions
@@ -19,6 +20,12 @@ namespace UWPWhatsNew.Views.AppExtensions
         private void OnAppExtension(object sender, ItemClickEventArgs e)
         {
             ViewModel.LaunchExtensionAsync(e.ClickedItem as AppExtension);
+        }
+
+        private void OnRemoveExtensionClicked(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        {
+
+            ViewModel.AskRemoveExtensionAsync(((FrameworkElement) sender).DataContext as AppExtension);
         }
     }
 }
