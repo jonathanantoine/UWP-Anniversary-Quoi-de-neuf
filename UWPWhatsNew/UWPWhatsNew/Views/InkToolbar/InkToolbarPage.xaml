@@ -18,6 +18,7 @@
         <InkCanvas x:Name="_inkCanvas" />
         <InkToolbar x:Name="_inkToolbar"
                     VerticalAlignment="Top"
+                    
                     TargetInkCanvas="{x:Bind _inkCanvas}">
 
             <InkToolbarBallpointPenButton />
@@ -27,7 +28,7 @@
             <InkToolbarRulerButton />
 
             <InkToolbarCustomPenButton MinStrokeWidth="1"
-                                       MaxStrokeWidth="3"
+                                       MaxStrokeWidth="7"
                                        SelectedStrokeWidth="2"
                                        SelectedBrushIndex="1"
                                        Palette="{StaticResource PenBrushCollection}">

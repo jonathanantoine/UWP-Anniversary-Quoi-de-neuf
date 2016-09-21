@@ -29,10 +29,8 @@
   </Resources>
 
   <Applications>
-    <Application Id="App"
-      Executable="$targetnametoken$.exe"
-      EntryPoint="UWPWhatsNewExtension.App">
-      <uap:VisualElements 
+    <Application Id="App">
+      <uap:VisualElements
         AppListEntry="none"
         DisplayName="UWPWhatsNewExtension"
         Square150x150Logo="Assets\Square150x150Logo.png"

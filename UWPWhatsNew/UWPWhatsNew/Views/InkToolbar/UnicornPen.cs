@@ -17,8 +17,6 @@ namespace UWPWhatsNew.Views.InkToolbar
             CreateInkDrawingAttributesCore(Brush brush, double strokeWidth)
         {
             InkDrawingAttributes inkDrawingAttributes = new InkDrawingAttributes();
-            inkDrawingAttributes.PenTip = PenTipShape.Circle;
-
 
             inkDrawingAttributes.Size = new Windows.Foundation.Size(strokeWidth, strokeWidth * 20);
             SolidColorBrush solidColorBrush = brush as SolidColorBrush;

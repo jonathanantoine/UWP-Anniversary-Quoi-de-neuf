@@ -126,6 +126,7 @@ namespace UWPWhatsNew.Views.ConnectedApps
             {
                 RequestAccessError = string.Empty;
                 var result = await RemoteSystem.RequestAccessAsync();
+
                 if (result != RemoteSystemAccessStatus.Allowed)
                 {
                     RequestAccessError = "Impossible de lister les périphériques : " + result;
@@ -141,6 +142,7 @@ namespace UWPWhatsNew.Views.ConnectedApps
 
                 RemoteSystems = new ObservableCollection<RemoteSystem>();
 
+                #region listing
                 if (IsListingOnlyActiveDevices)
                 {
                     var filter = new IRemoteSystemFilter[]
@@ -151,13 +153,12 @@ namespace UWPWhatsNew.Views.ConnectedApps
                     _watcher = RemoteSystem.CreateWatcher(filter);
                 }
                 else
-                {
+                { 
+                    #endregion
                     _watcher = RemoteSystem.CreateWatcher();
                     _watcher.RemoteSystemAdded += OnWatcherRemoteSystemAdded;
                     _watcher.RemoteSystemRemoved += OnWatcherRemoteSystemRemoved;
                 }
-
-
 
                 _watcher.RemoteSystemUpdated += OnWatcher_RemoteSystemUpdated;
 
@@ -270,10 +271,8 @@ namespace UWPWhatsNew.Views.ConnectedApps
                 else
                 {
                     var result = await launchUriTask;
-
                     LaunchRemoteUriResult = "Appel effectué : " + result;
                 }
-
             }
         }
 
