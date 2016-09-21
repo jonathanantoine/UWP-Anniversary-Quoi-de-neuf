@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using UWPWhatsNew.Common;
-using UWPWhatsNew.Views.Shell;
 
-namespace UWPWhatsNew.Views
+namespace UWPWhatsNew.Views.Shell
 {
     public class ShellViewModel : BindableBase
     {

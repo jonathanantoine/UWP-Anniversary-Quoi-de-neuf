@@ -13,6 +13,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 using Application = Windows.UI.Xaml.Application;
 
@@ -29,8 +30,18 @@ namespace UWPWhatsNew
         /// </summary>
         public App()
         {
-            this.InitializeComponent();
-            this.Suspending += OnSuspending;
+            InitializeComponent();
+            EnteredBackground += App_OnEnteredBackground;
+            LeavingBackground += App_OnLeavingBackground;
+            Suspending += OnSuspending;
+        }
+
+        private void App_OnLeavingBackground(object sender, LeavingBackgroundEventArgs e)
+        {
+        }
+
+        private void App_OnEnteredBackground(object sender, EnteredBackgroundEventArgs e)
+        {
         }
 
         public Frame RootFrame { get; set; }
@@ -44,6 +55,8 @@ namespace UWPWhatsNew
             base.OnBackgroundActivated(args);
             var instance = args.TaskInstance;
 
+
+            //Démarrage du traitement AppService
             var details = instance.TriggerDetails as AppServiceTriggerDetails;
             if (details != null)
             {
@@ -51,42 +64,53 @@ namespace UWPWhatsNew
             }
         }
 
-        private static readonly HttpClient _DownloadHttpClient = new HttpClient();
-        private void CustomSnowFallFromAppServiceAsync(IBackgroundTaskInstance instance, AppServiceTriggerDetails details)
+        private void CustomSnowFallFromAppServiceAsync(
+            IBackgroundTaskInstance instance,
+            AppServiceTriggerDetails details)
         {
             var def = instance.GetDeferral();
             instance.Canceled += (_, __) => { def.Complete(); };
-            details.AppServiceConnection.RequestReceived += async (_, message) =>
+            details.AppServiceConnection.RequestReceived += (_, message) =>
             {
                 var messageDef = message.GetDeferral();
-
                 try
                 {
-
-                    var targetUri = message.Request.Message.FirstOrDefault(kVp => kVp.Key == "targetUri").Value?.ToString();
-                    if (!string.IsNullOrEmpty(targetUri))
+                    try
                     {
-                        try
+                        // lecture du message
+                        var targetUri = message.Request.Message.FirstOrDefault(kVp => kVp.Key == "targetUri").Value?.ToString();
+                        if (!string.IsNullOrEmpty(targetUri))
                         {
-                            var downloadTask = _DownloadHttpClient.GetByteArrayAsync(targetUri);
-                            var targetFile = await ApplicationData.Current.TemporaryFolder.CreateFileAsync(Guid.NewGuid().ToString("N"));
 
-                            var imageBytes = await downloadTask;
+                            // Uri locale = pas de téléchargement
+                            if (targetUri.StartsWith("ms-appx"))
+                            {
+                                DispatcherHelper.CheckBeginInvokeOnUIAsync(() => SnowFallAsync(true, new BitmapImage(new Uri(targetUri))));
+                                return;
+                            }
 
-                            await FileIO.WriteBytesAsync(targetFile, imageBytes);
+                            DispatcherHelper.CheckBeginInvokeOnUIAsync(
+                                async () =>
+                                {
+                                    // téléchargement local de l'image
+                                    var image = await Microsoft.Toolkit.Uwp.UI.ImageCache.GetFromCacheAsync(new Uri(targetUri));
 
-                            DispatcherHelper.CheckBeginInvokeOnUIAsync(() => SnowFallAsync(true, targetFile.Path));
+                                    SnowFallAsync(true, image);
+                                });
+
                         }
-                        finally
-                        {
-                            def.Complete();
-                        }
+
                     }
-
+                    finally
+                    {
+                        // fermeture du message
+                        messageDef.Complete();
+                    }
                 }
                 finally
                 {
-                    messageDef.Complete();
+                    // On ne fera pas d'autres communications
+                    def.Complete();
                 }
             };
 
@@ -193,7 +217,7 @@ namespace UWPWhatsNew
         }
 
         private static readonly Random _Random = new Random((int)DateTime.UtcNow.Ticks);
-        private async Task SnowFallAsync(bool shouldDelay, string imagePath = "")
+        private async Task SnowFallAsync(bool shouldDelay, BitmapImage image = null)
         {
             if (shouldDelay)
             {
@@ -204,8 +228,8 @@ namespace UWPWhatsNew
             for (int i = 0; i < 12; i++)
             {
                 await Task.Delay(_Random.Next(50, 200));
-                panel?.Children.Add(new SnowFallUserControl(imagePath));
-                panel?.Children.Add(new SnowFallUserControl(imagePath));
+                panel?.Children.Add(new SnowFallUserControl(image));
+                panel?.Children.Add(new SnowFallUserControl(image));
             }
         }
     }
