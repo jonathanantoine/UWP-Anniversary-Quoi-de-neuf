@@ -5,8 +5,13 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWPWhatsNew", "UWPWhatsNew\UWPWhatsNew.csproj", "{DA3FE209-DB2F-465F-98AC-79F190C0424A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UWPWhatsNewExtension", "UWPWhatsNewExtension\UWPWhatsNewExtension.csproj", "{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug with lifecycle notifications|ARM = Debug with lifecycle notifications|ARM
+		Debug with lifecycle notifications|x64 = Debug with lifecycle notifications|x64
+		Debug with lifecycle notifications|x86 = Debug with lifecycle notifications|x86
 		Debug|ARM = Debug|ARM
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
@@ -15,6 +20,15 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA3FE209-DB2F-465F-98AC-79F190C0424A}.Debug with lifecycle notifications|ARM.ActiveCfg = Debug with lifecycle notifications|ARM
+		{DA3FE209-DB2F-465F-98AC-79F190C0424A}.Debug with lifecycle notifications|ARM.Build.0 = Debug with lifecycle notifications|ARM
+		{DA3FE209-DB2F-465F-98AC-79F190C0424A}.Debug with lifecycle notifications|ARM.Deploy.0 = Debug with lifecycle notifications|ARM
+		{DA3FE209-DB2F-465F-98AC-79F190C0424A}.Debug with lifecycle notifications|x64.ActiveCfg = Debug with lifecycle notifications|x64
+		{DA3FE209-DB2F-465F-98AC-79F190C0424A}.Debug with lifecycle notifications|x64.Build.0 = Debug with lifecycle notifications|x64
+		{DA3FE209-DB2F-465F-98AC-79F190C0424A}.Debug with lifecycle notifications|x64.Deploy.0 = Debug with lifecycle notifications|x64
+		{DA3FE209-DB2F-465F-98AC-79F190C0424A}.Debug with lifecycle notifications|x86.ActiveCfg = Debug with lifecycle notifications|x86
+		{DA3FE209-DB2F-465F-98AC-79F190C0424A}.Debug with lifecycle notifications|x86.Build.0 = Debug with lifecycle notifications|x86
+		{DA3FE209-DB2F-465F-98AC-79F190C0424A}.Debug with lifecycle notifications|x86.Deploy.0 = Debug with lifecycle notifications|x86
 		{DA3FE209-DB2F-465F-98AC-79F190C0424A}.Debug|ARM.ActiveCfg = Debug|ARM
 		{DA3FE209-DB2F-465F-98AC-79F190C0424A}.Debug|ARM.Build.0 = Debug|ARM
 		{DA3FE209-DB2F-465F-98AC-79F190C0424A}.Debug|ARM.Deploy.0 = Debug|ARM
@@ -33,6 +47,33 @@ Global
 		{DA3FE209-DB2F-465F-98AC-79F190C0424A}.Release|x86.ActiveCfg = Release|x86
 		{DA3FE209-DB2F-465F-98AC-79F190C0424A}.Release|x86.Build.0 = Release|x86
 		{DA3FE209-DB2F-465F-98AC-79F190C0424A}.Release|x86.Deploy.0 = Release|x86
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug with lifecycle notifications|ARM.ActiveCfg = Debug|ARM
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug with lifecycle notifications|ARM.Build.0 = Debug|ARM
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug with lifecycle notifications|ARM.Deploy.0 = Debug|ARM
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug with lifecycle notifications|x64.ActiveCfg = Debug|x64
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug with lifecycle notifications|x64.Build.0 = Debug|x64
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug with lifecycle notifications|x64.Deploy.0 = Debug|x64
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug with lifecycle notifications|x86.ActiveCfg = Debug|x86
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug with lifecycle notifications|x86.Build.0 = Debug|x86
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug with lifecycle notifications|x86.Deploy.0 = Debug|x86
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug|ARM.ActiveCfg = Debug|ARM
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug|ARM.Build.0 = Debug|ARM
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug|ARM.Deploy.0 = Debug|ARM
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug|x64.ActiveCfg = Debug|x64
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug|x64.Build.0 = Debug|x64
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug|x64.Deploy.0 = Debug|x64
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug|x86.ActiveCfg = Debug|x86
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug|x86.Build.0 = Debug|x86
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Debug|x86.Deploy.0 = Debug|x86
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Release|ARM.ActiveCfg = Release|ARM
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Release|ARM.Build.0 = Release|ARM
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Release|ARM.Deploy.0 = Release|ARM
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Release|x64.ActiveCfg = Release|x64
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Release|x64.Build.0 = Release|x64
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Release|x64.Deploy.0 = Release|x64
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Release|x86.ActiveCfg = Release|x86
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Release|x86.Build.0 = Release|x86
+		{477AA9DE-9C2B-48AF-B60D-C4FD4FDA041C}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

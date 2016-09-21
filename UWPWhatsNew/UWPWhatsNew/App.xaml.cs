@@ -13,6 +13,8 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Foundation.Metadata;
 using Windows.Storage;
+using Windows.System;
+using Windows.System.Diagnostics;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -40,17 +42,56 @@ namespace UWPWhatsNew
         public App()
         {
             InitializeComponent();
+            MessageService.ClearAllPreviousToast();
             EnteredBackground += App_OnEnteredBackground;
             LeavingBackground += App_OnLeavingBackground;
             Suspending += OnSuspending;
+            Resuming += OnResuming;
         }
 
+        private static int _lifecycleEventCount = 0;
         private void App_OnLeavingBackground(object sender, LeavingBackgroundEventArgs e)
         {
+            var def = e.GetDeferral();
+
+#if LIFECYCLE_EVENTS
+            MessageService.DisplayToastMessage(_lifecycleEventCount++ + " LEAVING BACKGROUND");
+#endif
+            def.Complete();
         }
 
         private void App_OnEnteredBackground(object sender, EnteredBackgroundEventArgs e)
         {
+            var def = e.GetDeferral();
+#if LIFECYCLE_EVENTS
+
+            var usage = MemoryManager.AppMemoryUsage / (1024 * 1024) + " Mo";
+            var limit = MemoryManager.AppMemoryUsageLimit / (1024 * 1024) + " Mo";
+            var percent = (int)(MemoryManager.AppMemoryUsage / (double)MemoryManager.AppMemoryUsageLimit * 100) + "%";
+
+            MessageService.DisplayToastMessage(_lifecycleEventCount++ + " ENTERED BACKGROUND :"
+                + Environment.NewLine + usage + " of " + limit + " - " + percent);
+#endif
+
+            def.Complete();
+        }
+
+
+        private void OnSuspending(object sender, SuspendingEventArgs e)
+        {
+            var deferral = e.SuspendingOperation.GetDeferral();
+#if LIFECYCLE_EVENTS
+            MessageService.DisplayToastMessage(_lifecycleEventCount++ + " SUSPENDING");
+#endif
+
+            deferral.Complete();
+        }
+
+        private void OnResuming(object sender, object e)
+        {
+#if LIFECYCLE_EVENTS
+            MessageService.DisplayToastMessage(_lifecycleEventCount++ + " RESUMING");
+#endif
         }
 
         public Frame RootFrame { get; set; }
@@ -196,21 +237,6 @@ namespace UWPWhatsNew
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
-
-        /// <summary>
-        /// Invoked when application execution is being suspended.  Application state is saved
-        /// without knowing whether the application will be terminated or resumed with the contents
-        /// of memory still intact.
-        /// </summary>
-        /// <param name="sender">The source of the suspend request.</param>
-        /// <param name="e">Details about the suspend request.</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
-        {
-            var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
-            deferral.Complete();
-        }
-
 
 
         protected override void OnActivated(IActivatedEventArgs args)

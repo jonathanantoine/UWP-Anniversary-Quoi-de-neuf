@@ -152,9 +152,9 @@ namespace UWPWhatsNew.Views.ConnectedApps
                 }
                 else
                 {
-                    var watcher = RemoteSystem.CreateWatcher();
-                    watcher.RemoteSystemAdded += OnWatcherRemoteSystemAdded;
-                    watcher.RemoteSystemRemoved += OnWatcherRemoteSystemRemoved;
+                    _watcher = RemoteSystem.CreateWatcher();
+                    _watcher.RemoteSystemAdded += OnWatcherRemoteSystemAdded;
+                    _watcher.RemoteSystemRemoved += OnWatcherRemoteSystemRemoved;
                 }
 
 
