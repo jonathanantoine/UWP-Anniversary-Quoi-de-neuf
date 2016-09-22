@@ -29,7 +29,7 @@
   </Resources>
 
   <Applications>
-    <Application Id="App">
+    <Application Id="App" >
       <uap:VisualElements
         AppListEntry="none"
         DisplayName="UWPWhatsNewExtension"
@@ -47,6 +47,9 @@
             DisplayName="Paillette" Description="Envoyons des paillettes.">
           </uap3:AppExtension>
         </uap3:Extension>
+        <uap:Extension Category="windows.appService" EntryPoint="UWPWhatsNewExtensionAppService.ImageSpecialEffectTask" >
+          <uap:AppService Name="com.infinitesquare.UWPWhatsNewExtension" />
+        </uap:Extension>
       </Extensions>
     </Application>
   </Applications>

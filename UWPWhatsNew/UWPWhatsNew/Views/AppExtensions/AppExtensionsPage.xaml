@@ -26,11 +26,41 @@
                    Margin="0,0,0,10"
                    FontSize="24" />
 
+        <TextBlock Grid.Row="1"
+                   Visibility="{x:Bind ViewModel.IsAppExtensionListEmpty}"
+                   Text="Il n'y a aucune extension disponible sur ce périphérique..." />
+
         <ListView Grid.Row="1"
                   IsItemClickEnabled="True"
                   ItemClick="OnAppExtension"
                   ItemsSource="{x:Bind ViewModel.AppExtensions,Mode=OneWay}"
                   SelectionMode="None">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment"
+                            Value="Stretch" />
+                </Style>
+            </ListView.ItemContainerStyle>
+
+            <ListView.Header>
+                <Border Background="DarkGray"
+                        BorderBrush="Black"
+                        BorderThickness="1"
+                        Width="200"
+                        HorizontalAlignment="Center"
+                        Margin="5"
+                        Height="200">
+                    <Grid>
+                        <TextBlock Text="Résultat"
+                                   VerticalAlignment="Center"
+                                   HorizontalAlignment="Center"
+                                   Foreground="White"
+                                   FontSize="16"
+                                   FontWeight="Light" />
+                        <Image Source="{Binding OutputImage}" />
+                    </Grid>
+                </Border>
+            </ListView.Header>
 
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="AppExtensions1:AppExtension">
