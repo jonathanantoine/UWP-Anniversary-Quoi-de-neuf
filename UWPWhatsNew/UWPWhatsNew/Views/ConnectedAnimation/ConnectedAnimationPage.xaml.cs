@@ -26,9 +26,7 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
             this.InitializeComponent();
             enableAnimation.IsChecked = ConnectedAnimationData.AnimationIsEnabled;
             ViewModel = DataContext as ConnectedAnimationViewModel;
-
         }
-
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -55,7 +53,6 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
                 {
                     var root = (FrameworkElement)container.ContentTemplateRoot;
                     var image = (UIElement)root.FindName("ImageItem");
-
                     ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("Image", image);
                 }
             }
@@ -68,7 +65,8 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
                 new ContentThemeTransition()
             };
             _navigatedUri = item.ImageUrl;
-            Frame.Navigate(typeof(ConnectedAnimationDetail), _navigatedUri);
+            //ConnectedAnimationData.CurrentThumbnail = item;
+            Frame.Navigate(typeof(ConnectedAnimationDetail), item);
         }
 
         private async void ItemsGridView_Loaded(object sender, RoutedEventArgs e)

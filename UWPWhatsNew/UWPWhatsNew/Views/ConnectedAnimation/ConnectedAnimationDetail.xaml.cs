@@ -5,8 +5,6 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Media.Imaging;
 using Windows.UI.Xaml.Navigation;
 
-// The Blank Page item template is documented at http://go.microsoft.com/fwlink/?LinkId=234238
-
 namespace UWPWhatsNew.Views.ConnectedAnimation
 {
     /// <summary>
@@ -14,42 +12,39 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
     /// </summary>
     public sealed partial class ConnectedAnimationDetail : Page
     {
-        SystemNavigationManager _systemNavigationManager = SystemNavigationManager.GetForCurrentView();
+        private Thumbnail _thumbnail;
+        private SystemNavigationManager _systemNavigationManager = SystemNavigationManager.GetForCurrentView();
 
         public ConnectedAnimationDetail()
         {
             InitializeComponent();
-            Loaded += ConnectedAnimationDetail_Loaded;
+            _image.ImageOpened += _image_ImageOpened;
+            _systemNavigationManager.BackRequested += ConnectedAnimationDetail_BackRequested;
+            _systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
         }
 
-        private void ConnectedAnimationDetail_Loaded(object sender, Windows.UI.Xaml.RoutedEventArgs e)
+        private void _image_ImageOpened(object sender, Windows.UI.Xaml.RoutedEventArgs e)
         {
-            var img = _image;
-            if (img.Parent != null) { }
-        }
-
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-
-
-            _image.Source = new BitmapImage(new Uri((string)e.Parameter));
-
             if (ConnectedAnimationData.AnimationIsEnabled)
             {
                 var animation = ConnectedAnimationService.GetForCurrentView().GetAnimation("Image");
                 if (animation != null)
                 {
-                    _image.Opacity = 0;
-                    _image.ImageOpened += (sender_, e_) =>
-                    {
-                        _image.Opacity = 1;
-                        animation.TryStart(_image);
-                    };
+                    _image.Opacity = 1;
+                    animation.TryStart(_image);
                 }
             }
-            _systemNavigationManager.BackRequested += ConnectedAnimationDetail_BackRequested;
-            _systemNavigationManager.AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            _image.Opacity = 0;
+            _thumbnail = e.Parameter as Thumbnail;
+            if (_thumbnail != null)
+            {
+                _image.Source = new BitmapImage(new Uri((string)_thumbnail.ImageUrl));
+            }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
@@ -66,11 +61,9 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
             {
                 return;
             }
-
-            var img = _image;
-            if (img.Parent != null && ConnectedAnimationData.AnimationIsEnabled)
+            if (_image.Parent != null && ConnectedAnimationData.AnimationIsEnabled)
             {
-                ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("Image", img);
+                ConnectedAnimationService.GetForCurrentView().PrepareToAnimate("Image", _image);
             }
 
             e.Handled = true;

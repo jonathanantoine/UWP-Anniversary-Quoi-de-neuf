@@ -12,6 +12,8 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
         {
             AnimationIsEnabled = true;
         }
+
         public static bool AnimationIsEnabled { get; set; }
+
     }
 }
