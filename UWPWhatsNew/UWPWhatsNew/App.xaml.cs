@@ -95,8 +95,7 @@ namespace UWPWhatsNew
             }
             base.OnBackgroundActivated(args);
             var instance = args.TaskInstance;
-
-
+            
             //Démarrage du traitement AppService
             var details = instance.TriggerDetails as AppServiceTriggerDetails;
             if (details != null)
