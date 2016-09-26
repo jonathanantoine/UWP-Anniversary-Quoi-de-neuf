@@ -18,12 +18,16 @@
                   VerticalAlignment="Center" />
         </Grid>
 
-        <Grid x:Name="BottomGrid"
-              Grid.Column="1">
+        <StackPanel Grid.Column="1">
+            <CheckBox Name="EnableAnimations"
+                      IsChecked="True"
+                      Checked="EnableAnimations_Checked"
+                      Unchecked="EnableAnimations_Unchecked"
+                      Content="Activer l'animation"
+                      Margin="5,5,5,5" />
             <StackPanel Orientation="Vertical"
                         VerticalAlignment="Center"
-                        Width="180"
-                        Padding="10 10 10 10">
+                        Width="180">
                 <Button Margin="5,5,5,5"
                         Click="GridLayout"
                         Content="Grid Layout"
@@ -42,14 +46,9 @@
                 <Button Margin="5,5,5,5"
                         Click="EllipseLayout"
                         Content="Ellipse Layout"
-                        Height="70"
-                        Width="150" />
-                <!--<Button Margin="5,5,5,5"
-                        Click="Scale"
-                        Content="Toggle Scale"
                         Height="50"
-                        Width="150" />-->
+                        Width="150" />
             </StackPanel>
-        </Grid>
+        </StackPanel>
     </Grid>
 </Page>

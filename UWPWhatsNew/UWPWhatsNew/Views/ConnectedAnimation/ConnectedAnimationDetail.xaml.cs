@@ -44,6 +44,8 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
             if (_thumbnail != null)
             {
                 _image.Source = new BitmapImage(new Uri((string)_thumbnail.ImageUrl));
+                if (!ConnectedAnimationData.AnimationIsEnabled)
+                    _image.Opacity = 1;
             }
         }
 

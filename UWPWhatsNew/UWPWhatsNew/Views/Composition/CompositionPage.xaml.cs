@@ -63,7 +63,23 @@ namespace UWPWhatsNew.Views.Composition
 
 
             //Create a list of image brushes that can be applied to a visual
-            string[] imageNames = { "60Banana.png", "60Lemon.png", "60Vanilla.png", "60Mint.png", "60Orange.png", "110Strawberry.png", "60SprinklesRainbow.png" };
+            string[] imageNames = {
+                "01.png",
+                "02.png",
+                "03.png",
+                "04.png",
+                "05.png",
+                "06.png",
+                "07.png",
+                "08.png",
+                "60Banana.png",
+                "60Lemon.png",
+                "60Vanilla.png",
+                "60Mint.png",
+                "60Orange.png",
+                "110Strawberry.png",
+                "60SprinklesRainbow.png"
+             };
             List<CompositionSurfaceBrush> imageBrushList = new List<CompositionSurfaceBrush>();
             IImageLoader imageFactory = ImageLoaderFactory.CreateImageLoader(_compositor);
             for (int k = 0; k < imageNames.Length; k++)
@@ -85,10 +101,26 @@ namespace UWPWhatsNew.Views.Composition
                     _root.Children.InsertAtTop(CreateChildElement(brush, posXUpdated, posYUpdated));
                 }
             }
-            
-            SetAnimationOnChildren();
+            EnableAnimationOnChildren(EnableAnimations.IsChecked.GetValueOrDefault());
         }
 
+        #region Activation des animatiions
+        private void EnableAnimations_Checked(object sender, RoutedEventArgs e)
+        {
+            if (_compositor != null)
+            {
+                EnableAnimationOnChildren(true);
+            }
+        }
+
+        private void EnableAnimations_Unchecked(object sender, RoutedEventArgs e)
+        {
+            if (_compositor != null)
+            {
+                EnableAnimationOnChildren(false);
+            }
+        }
+        #endregion
 
         /// <summary>
         /// Creates a visible element in our application
@@ -115,11 +147,15 @@ namespace UWPWhatsNew.Views.Composition
         }
 
 
-        private void SetAnimationOnChildren()
+        private void EnableAnimationOnChildren(bool animationIsEnable)
         {
-            var implicitAnimationCollection = _compositor.CreateImplicitAnimationCollection();
-            implicitAnimationCollection["Offset"] = CreateOffsetAnimation();
-            implicitAnimationCollection["Scale"] = CreateScaleAnimation();
+            ImplicitAnimationCollection implicitAnimationCollection = null;
+            if (animationIsEnable)
+            {
+                implicitAnimationCollection = _compositor.CreateImplicitAnimationCollection();
+                implicitAnimationCollection["Offset"] = CreateOffsetAnimation();
+
+            }
             foreach (var child in _root.Children)
             {
                 child.ImplicitAnimations = implicitAnimationCollection;
@@ -141,31 +177,6 @@ namespace UWPWhatsNew.Views.Composition
 
             return _offsetKeyFrameAnimation;
         }
-
-        /// <summary>
-        /// Creates scale animation that can be applied to a visual
-        /// </summary>
-        CompositionAnimationGroup CreateScaleAnimation()
-        {
-            var scaleKeyFrameAnimation = _compositor.CreateVector3KeyFrameAnimation();
-            scaleKeyFrameAnimation.Target = "Scale";
-            scaleKeyFrameAnimation.InsertExpressionKeyFrame(1.0f, "this.FinalValue");
-            scaleKeyFrameAnimation.Duration = TimeSpan.FromSeconds(3);
-
-            var rotationAnimation = _compositor.CreateScalarKeyFrameAnimation();
-            rotationAnimation.Target = "RotationAngleInDegrees";
-            rotationAnimation.InsertExpressionKeyFrame(1.0f, "this.StartingValue + 45.0f");
-            rotationAnimation.Duration = TimeSpan.FromSeconds(3);
-
-            var animationGroup = _compositor.CreateAnimationGroup();
-
-            // AnimationGroup associates the animations with the target
-            animationGroup.Add(scaleKeyFrameAnimation);
-            animationGroup.Add(rotationAnimation);
-
-            return animationGroup;
-        }
-
 
         /// <summary>
         ///  This method implicitly animates the visual elements into a Grid layout
@@ -221,7 +232,6 @@ namespace UWPWhatsNew.Views.Composition
                 // Change the Offset property of the visual. This will trigger the implicit animation that is associated with the Offset change.
                 // The position of the element on the circle is defined using parametric equation:
                 child.Offset = new Vector3((float)(_circleRadius * Math.Cos(thetaRadians)) + _posX, (float)(_circleRadius * Math.Sin(thetaRadians) + _posY), 0);
-
                 // Update the angle to be used for the next visual element
                 theta += 2.5;
                 thetaRadians = theta * Math.PI / 180F;
@@ -273,7 +283,6 @@ namespace UWPWhatsNew.Views.Composition
                 // The position of the element on the ellipse is defined using parametric equation:
                 // x = alpha * cos(theta) ; y = beta*sin(theta)
                 child.Offset = new Vector3((float)(_ellipseRadiusX * Math.Cos(thetaRadians)) + _posX, (float)(_ellipseRadiusY * Math.Sin(thetaRadians)) + _posY, 0);
-
 
                 // Update the angle to be used for the next visual element
                 theta += 2.5;
