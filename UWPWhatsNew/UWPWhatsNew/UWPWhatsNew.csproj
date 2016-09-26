@@ -158,6 +158,14 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Images\CircleOpacityMask.png" />
+    <Content Include="Assets\Images\Composition\ImplicitAnimation\110Strawberry.png" />
+    <Content Include="Assets\Images\Composition\ImplicitAnimation\60Banana.png" />
+    <Content Include="Assets\Images\Composition\ImplicitAnimation\60Lemon.png" />
+    <Content Include="Assets\Images\Composition\ImplicitAnimation\60Mint.png" />
+    <Content Include="Assets\Images\Composition\ImplicitAnimation\60Orange.png" />
+    <Content Include="Assets\Images\Composition\ImplicitAnimation\60SprinklesRainbow.png" />
+    <Content Include="Assets\Images\Composition\ImplicitAnimation\60Strawberry.png" />
+    <Content Include="Assets\Images\Composition\ImplicitAnimation\60Vanilla.png" />
     <Content Include="Assets\Images\ConnectedAnimation\c1.png" />
     <Content Include="Assets\Images\ConnectedAnimation\c2.png" />
     <Content Include="Assets\Images\ConnectedAnimation\c3.png" />
