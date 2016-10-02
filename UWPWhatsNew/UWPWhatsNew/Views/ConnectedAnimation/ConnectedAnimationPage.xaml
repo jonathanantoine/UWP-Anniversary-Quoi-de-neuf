@@ -18,6 +18,7 @@
                   Padding="40"
                   IsItemClickEnabled="True"
                   ItemClick="ItemsGridView_ItemClick"
+                  ContainerContentChanging="gridView_ContainerContentChanging"
                   ItemsSource="{x:Bind ViewModel.Items}">
             <GridView.Header>
                 <CheckBox x:Name="enableAnimation"

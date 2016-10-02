@@ -10,6 +10,7 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Windows.UI.Composition;
 using Windows.UI.Xaml.Hosting;
+using System.Collections.Generic;
 
 namespace UWPWhatsNew.Views.ConnectedAnimation
 {
@@ -19,6 +20,8 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
     public sealed partial class ConnectedAnimationPage : Page
     {
         private static string _navigatedUri;
+        Compositor _compositor;
+        ImplicitAnimationCollection _elementImplicitAnimation;
 
         public ConnectedAnimationViewModel ViewModel { get; set; }
         public ConnectedAnimationPage()
@@ -26,6 +29,56 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
             this.InitializeComponent();
             enableAnimation.IsChecked = ConnectedAnimationData.AnimationIsEnabled;
             ViewModel = DataContext as ConnectedAnimationViewModel;
+
+            _compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
+
+            // Create ImplicitAnimations Collection. 
+            _elementImplicitAnimation = _compositor.CreateImplicitAnimationCollection();
+
+            //Define trigger and animation that should play when the trigger is triggered. 
+            _elementImplicitAnimation["Offset"] = CreateOffsetAnimation();
+        }
+
+        private void gridView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
+        {
+            ////var elementVisual = ElementCompositionPreview.GetElementVisual(args.ItemContainer);
+            ////if (args.InRecycleQueue)
+            ////{
+            ////    elementVisual.ImplicitAnimations = null;
+            ////}
+            ////else
+            ////{
+            ////    //Add implicit animation to each visual 
+            ////    elementVisual.ImplicitAnimations = _elementImplicitAnimation;
+            ////}
+        }
+
+        private CompositionAnimationGroup CreateOffsetAnimation()
+        {
+
+            //Define Offset Animation for the Animation group
+            Vector3KeyFrameAnimation offsetAnimation = _compositor.CreateVector3KeyFrameAnimation();
+            offsetAnimation.InsertExpressionKeyFrame(1.0f, "this.FinalValue");
+            offsetAnimation.Duration = TimeSpan.FromSeconds(.4);
+
+            //Define Animation Target for this animation to animate using definition. 
+            offsetAnimation.Target = "Offset";
+
+            //Define Rotation Animation for Animation Group. 
+            ScalarKeyFrameAnimation rotationAnimation = _compositor.CreateScalarKeyFrameAnimation();
+            rotationAnimation.InsertKeyFrame(.5f, 0.160f);
+            rotationAnimation.InsertKeyFrame(1f, 0f);
+            rotationAnimation.Duration = TimeSpan.FromSeconds(.4);
+
+            //Define Animation Target for this animation to animate using definition. 
+            rotationAnimation.Target = "RotationAngle";
+
+            //Add Animations to Animation group. 
+            CompositionAnimationGroup animationGroup = _compositor.CreateAnimationGroup();
+            animationGroup.Add(offsetAnimation);
+            animationGroup.Add(rotationAnimation);
+
+            return animationGroup;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

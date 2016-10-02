@@ -41,12 +41,12 @@ namespace UWPWhatsNew.Views.Composition
             InitializeComposition();
         }
 
-
         /// <summary>
         /// Initialize Composition
         /// </summary>
         private void InitializeComposition()
         {
+            var compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
 
             // Retrieve an instance of the Compositor from the backing Visual of the Page
             _compositor = ElementCompositionPreview.GetElementVisual(this).Compositor;
@@ -54,15 +54,14 @@ namespace UWPWhatsNew.Views.Composition
             // Create a root visual from the Compositor
             _root = _compositor.CreateContainerVisual();
 
-            // Set the root ContainerVisual as the XAML Page Visual           
+            // Set the root ContainerVisual as the XAML Page Visual
             ElementCompositionPreview.SetElementChildVisual(this, _root);
 
-            // Assign initial values to variables used to store updated offsets for the visuals          
+            // Assign initial values to variables used to store updated offsets for the visuals
             float posXUpdated = _posX;
             float posYUpdated = _posY;
 
-
-            //Create a list of image brushes that can be applied to a visual
+            // Create a list of image brushes that can be applied to a visual
             string[] imageNames = {
                 "01.png",
                 "02.png",
@@ -104,7 +103,7 @@ namespace UWPWhatsNew.Views.Composition
             EnableAnimationOnChildren(EnableAnimations.IsChecked.GetValueOrDefault());
         }
 
-        #region Activation des animatiions
+        #region Activation des animations
         private void EnableAnimations_Checked(object sender, RoutedEventArgs e)
         {
             if (_compositor != null)
@@ -154,7 +153,6 @@ namespace UWPWhatsNew.Views.Composition
             {
                 implicitAnimationCollection = _compositor.CreateImplicitAnimationCollection();
                 implicitAnimationCollection["Offset"] = CreateOffsetAnimation();
-
             }
             foreach (var child in _root.Children)
             {
@@ -237,7 +235,6 @@ namespace UWPWhatsNew.Views.Composition
                 thetaRadians = theta * Math.PI / 180F;
             }
         }
-
 
         /// <summary>
         /// This method implicitly animates the visual elements into a spiral layout
