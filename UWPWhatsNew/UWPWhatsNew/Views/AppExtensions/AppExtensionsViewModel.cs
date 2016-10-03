@@ -52,6 +52,7 @@ namespace UWPWhatsNew.Views.AppExtensions
 
         private async Task InitAsync()
         {
+            await Task.Delay(1000);
             var allInstalled = await _catalog.FindAllAsync();
             AppExtensions = allInstalled.ToList();
 

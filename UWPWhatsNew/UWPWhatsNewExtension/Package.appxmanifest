@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
   xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
   xmlns:uap3="http://schemas.microsoft.com/appx/manifest/uap/windows10/3"
-  IgnorableNamespaces="uap mp">
+  IgnorableNamespaces="uap mp uap3">
 
   <Identity
     Name="1af50c9f-e5c8-4097-977d-9b453fdbaead"
@@ -29,7 +28,7 @@
   </Resources>
 
   <Applications>
-    <Application Id="App" >
+    <Application Id="App"  >
       <uap:VisualElements
         AppListEntry="none"
         DisplayName="UWPWhatsNewExtension"
@@ -41,15 +40,15 @@
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
       <Extensions>
+        <uap:Extension Category="windows.appService" EntryPoint="UWPWhatsNewExtensionAppService.ImageSpecialEffectTask" >
+          <uap:AppService Name="com.infinitesquare.UWPWhatsNewExtension" />
+        </uap:Extension>
         <uap3:Extension Category="windows.appExtension">
           <uap3:AppExtension
             Name="licorne" Id="Paillette" PublicFolder="Public"
             DisplayName="Paillette" Description="Mettons un peu de paillettes dans nos vies.">
           </uap3:AppExtension>
         </uap3:Extension>
-        <uap:Extension Category="windows.appService" EntryPoint="UWPWhatsNewExtensionAppService.ImageSpecialEffectTask" >
-          <uap:AppService Name="com.infinitesquare.UWPWhatsNewExtension" />
-        </uap:Extension>
       </Extensions>
     </Application>
   </Applications>

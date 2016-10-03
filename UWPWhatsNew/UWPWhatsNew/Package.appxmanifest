@@ -16,26 +16,23 @@
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="UWPWhatsNew.App">
       <uap:VisualElements DisplayName="QUOI DE NEUF DANS LE SDK ANNIVERSARY ?" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="UWPWhatsNew" BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
+        <uap:LockScreen Notification="badge" BadgeLogo="Assets\Logodubadge.png" />
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\Grandevignette.png" Square71x71Logo="Assets\Petitevignette.png">
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Assets\SplashScreen.png" BackgroundColor="#FFFFFF" />
       </uap:VisualElements>
       <Extensions>
-        <uap3:Extension Category="windows.appExtensionHost">
-          <uap3:AppExtensionHost >
-            <uap3:Name>licorne</uap3:Name>
-          </uap3:AppExtensionHost>
-        </uap3:Extension>
-        <uap:Extension Category="windows.appService">
-          <uap3:AppService Name="com.infinitesquare.CustomRain"
-                           SupportsRemoteSystems="true" />
-        </uap:Extension>
         <uap:Extension Category="windows.protocol">
           <uap:Protocol Name="td2016whatsnew">
             <uap:Logo>Assets\Images\unicorn.png</uap:Logo>
             <uap:DisplayName>UWPWhatsNew 2016</uap:DisplayName>
           </uap:Protocol>
         </uap:Extension>
+        <uap3:Extension Category="windows.appExtensionHost">
+          <uap3:AppExtensionHost>
+            <uap3:Name>licorne</uap3:Name>
+          </uap3:AppExtensionHost>
+        </uap3:Extension>
       </Extensions>
     </Application>
   </Applications>

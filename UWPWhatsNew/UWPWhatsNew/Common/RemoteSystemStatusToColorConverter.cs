@@ -21,15 +21,10 @@ namespace UWPWhatsNew.Common
                 {
                     case RemoteSystemStatus.Unavailable:
                         return new SolidColorBrush(Colors.Red);
-                        break;
                     case RemoteSystemStatus.DiscoveringAvailability:
                         return new SolidColorBrush(Colors.Orange);
-
-                        break;
                     case RemoteSystemStatus.Available:
                         return new SolidColorBrush(Colors.ForestGreen);
-
-                        break;
                     case RemoteSystemStatus.Unknown:
                     default:
                         return new SolidColorBrush(Colors.Gray);
