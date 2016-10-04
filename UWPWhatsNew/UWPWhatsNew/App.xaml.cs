@@ -39,8 +39,9 @@ namespace UWPWhatsNew
             Suspending += OnSuspending;
             Resuming += OnResuming;
         }
-
+#if LIFECYCLE_EVENTS
         private static int _lifecycleEventCount = 0;
+#endif
         private void App_OnLeavingBackground(object sender, LeavingBackgroundEventArgs e)
         {
             var def = e.GetDeferral();

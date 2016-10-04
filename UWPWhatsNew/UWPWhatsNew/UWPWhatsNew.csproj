@@ -164,6 +164,11 @@
     <None Include="UWPWhatsNew_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\Grandevignette.scale-100.png" />
+    <Content Include="Assets\Grandevignette.scale-125.png" />
+    <Content Include="Assets\Grandevignette.scale-150.png" />
+    <Content Include="Assets\Grandevignette.scale-200.png" />
+    <Content Include="Assets\Grandevignette.scale-400.png" />
     <Content Include="Assets\Images\CircleOpacityMask.png" />
     <Content Include="Assets\Images\Composition\Blur\sw1.jpg" />
     <Content Include="Assets\Images\Composition\Blur\sw2.jpg" />
@@ -220,13 +225,50 @@
     <Content Include="Assets\Images\IconSingleProcess.png" />
     <Content Include="Assets\Images\unicorn.png" />
     <None Include="Package.StoreAssociation.xml" />
+    <Content Include="Assets\Logodubadge.scale-100.png" />
+    <Content Include="Assets\Logodubadge.scale-125.png" />
+    <Content Include="Assets\Logodubadge.scale-150.png" />
+    <Content Include="Assets\Logodubadge.scale-200.png" />
+    <Content Include="Assets\Logodubadge.scale-400.png" />
+    <Content Include="Assets\Petitevignette.scale-100.png" />
+    <Content Include="Assets\Petitevignette.scale-125.png" />
+    <Content Include="Assets\Petitevignette.scale-150.png" />
+    <Content Include="Assets\Petitevignette.scale-200.png" />
+    <Content Include="Assets\Petitevignette.scale-400.png" />
+    <Content Include="Assets\SplashScreen.scale-100.png" />
+    <Content Include="Assets\SplashScreen.scale-125.png" />
+    <Content Include="Assets\SplashScreen.scale-150.png" />
+    <Content Include="Assets\SplashScreen.scale-400.png" />
+    <Content Include="Assets\Square150x150Logo.scale-100.png" />
+    <Content Include="Assets\Square150x150Logo.scale-125.png" />
+    <Content Include="Assets\Square150x150Logo.scale-150.png" />
+    <Content Include="Assets\Square150x150Logo.scale-400.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-16.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-24.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-256.png" />
+    <Content Include="Assets\Square44x44Logo.altform-unplated_targetsize-48.png" />
+    <Content Include="Assets\Square44x44Logo.scale-100.png" />
+    <Content Include="Assets\Square44x44Logo.scale-125.png" />
+    <Content Include="Assets\Square44x44Logo.scale-150.png" />
+    <Content Include="Assets\Square44x44Logo.scale-400.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-16.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-24.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-256.png" />
+    <Content Include="Assets\Square44x44Logo.targetsize-48.png" />
+    <Content Include="Assets\StoreLogo.scale-100.png" />
+    <Content Include="Assets\StoreLogo.scale-125.png" />
+    <Content Include="Assets\StoreLogo.scale-150.png" />
+    <Content Include="Assets\StoreLogo.scale-200.png" />
+    <Content Include="Assets\StoreLogo.scale-400.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-100.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-125.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-150.png" />
+    <Content Include="Assets\Wide310x150Logo.scale-400.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
     <Content Include="Assets\Square150x150Logo.scale-200.png" />
     <Content Include="Assets\Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
     <Content Include="Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
