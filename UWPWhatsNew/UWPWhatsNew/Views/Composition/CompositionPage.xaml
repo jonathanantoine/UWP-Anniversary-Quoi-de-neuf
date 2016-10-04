@@ -4,51 +4,21 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       mc:Ignorable="d">
-
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
 
-        <Grid x:Name="TopGrid"
-              Grid.Column="0">
-            <Grid x:Name="Placeholder"
-                  HorizontalAlignment="Center"
-                  VerticalAlignment="Center" />
+        <Grid VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Button Content="ImplicitAnimations"
+                    Click="ImplicitAnimations_Click" 
+                    Width="200" Margin="5"/>
+            <Button Content="Blur"
+                    Click="Blur_Click"
+                    Width="200"
+                    Grid.Row="1"
+                    Margin="5"/>
         </Grid>
-
-        <StackPanel Grid.Column="1">
-            <CheckBox Name="EnableAnimations"
-                      IsChecked="True"
-                      Checked="EnableAnimations_Checked"
-                      Unchecked="EnableAnimations_Unchecked"
-                      Content="Activer l'animation"
-                      Margin="5,5,5,5" />
-            <StackPanel Orientation="Vertical"
-                        VerticalAlignment="Center"
-                        Width="180">
-                <Button Margin="5,5,5,5"
-                        Click="GridLayout"
-                        Content="Grid Layout"
-                        Height="50"
-                        Width="150" />
-                <Button Margin="5,5,5,5"
-                        Click="CircleLayout"
-                        Content="Circle Layout"
-                        Height="50"
-                        Width="150" />
-                <Button Margin="5,5,5,5"
-                        Click="SpiralLayout"
-                        Content="Spiral Layout"
-                        Height="50"
-                        Width="150" />
-                <Button Margin="5,5,5,5"
-                        Click="EllipseLayout"
-                        Content="Ellipse Layout"
-                        Height="50"
-                        Width="150" />
-            </StackPanel>
-        </StackPanel>
     </Grid>
 </Page>

@@ -112,10 +112,17 @@
       <DependentUpon>AppExtensionsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\AppExtensions\AppExtensionsViewModel.cs" />
+    <Compile Include="Views\Composition\BlurPage.xaml.cs">
+      <DependentUpon>BlurPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Composition\ColorEventArgs.cs" />
     <Compile Include="Views\Composition\CompositionPage.xaml.cs">
       <DependentUpon>CompositionPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\Composition\ImageLoader.cs" />
+    <Compile Include="Views\Composition\ImplicitAnimationsPage.xaml.cs">
+      <DependentUpon>ImplicitAnimationsPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Composition\ManagedSurface.cs" />
     <Compile Include="Views\ConnectedAnimation\ConnectedAnimationData.cs" />
     <Compile Include="Views\ConnectedAnimation\ConnectedAnimationDetail.xaml.cs">
@@ -158,6 +165,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Images\CircleOpacityMask.png" />
+    <Content Include="Assets\Images\Composition\Blur\sw1.jpg" />
+    <Content Include="Assets\Images\Composition\Blur\sw2.jpg" />
+    <Content Include="Assets\Images\Composition\Blur\sw3.jpg" />
+    <Content Include="Assets\Images\Composition\Blur\sw4.jpg" />
+    <Content Include="Assets\Images\Composition\Blur\sw5.jpg" />
     <Content Include="Assets\Images\Composition\ImplicitAnimation\01.png" />
     <Content Include="Assets\Images\Composition\ImplicitAnimation\02.png" />
     <Content Include="Assets\Images\Composition\ImplicitAnimation\03.png" />
@@ -230,7 +242,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\Composition\BlurPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\Composition\CompositionPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Composition\ImplicitAnimationsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

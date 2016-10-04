@@ -41,16 +41,16 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
 
         private void gridView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
         {
-            ////var elementVisual = ElementCompositionPreview.GetElementVisual(args.ItemContainer);
-            ////if (args.InRecycleQueue)
-            ////{
-            ////    elementVisual.ImplicitAnimations = null;
-            ////}
-            ////else
-            ////{
-            ////    //Add implicit animation to each visual 
-            ////    elementVisual.ImplicitAnimations = _elementImplicitAnimation;
-            ////}
+            var elementVisual = ElementCompositionPreview.GetElementVisual(args.ItemContainer);
+            if (args.InRecycleQueue)
+            {
+                elementVisual.ImplicitAnimations = null;
+            }
+            else
+            {
+                //Add implicit animation to each visual 
+                elementVisual.ImplicitAnimations = _elementImplicitAnimation;
+            }
         }
 
         private CompositionAnimationGroup CreateOffsetAnimation()

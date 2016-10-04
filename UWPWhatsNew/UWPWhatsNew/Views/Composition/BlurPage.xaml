@@ -1,0 +1,49 @@
+﻿<Page x:Class="UWPWhatsNew.Views.Composition.BlurPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:local="using:UWPWhatsNew.Views.Composition"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      mc:Ignorable="d"
+      Loaded="Page_Loaded">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Orientation="Vertical"
+                    HorizontalAlignment="Left"
+                    Margin="10">
+
+            <Button Content="Changer d'image"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Margin="10,15,0,10"
+                    Click="SwitchImage_Click"/>
+            
+            <ComboBox x:Name="BlendSelection"
+                      HorizontalAlignment="Stretch"
+                      VerticalAlignment="Stretch"
+                      SelectionChanged="BlendSelection_SelectionChanged"
+                      PlaceholderText="Blend Modes"
+                      Margin="10,15,0,10" />
+
+            <Button Content="Lancer l'animation"
+                    Click="Button_Click"
+                    Margin="10,15,0,10" />
+
+        </StackPanel>
+
+        <Image x:Name="BackgroundImage"
+               Grid.Column="1"
+               SizeChanged="BackgroundImage_SizeChanged"
+               Margin="10"
+               Source="ms-appx:///Assets/Images/Composition/Blur/sw1.jpg" />
+    </Grid>
+</Page>
