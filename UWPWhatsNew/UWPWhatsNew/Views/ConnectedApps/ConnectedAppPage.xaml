@@ -8,6 +8,7 @@
       xmlns:RemoteSystems="using:Windows.System.RemoteSystems"
       xmlns:Common="using:UWPWhatsNew.Common"
       xmlns:System="using:System"
+      xmlns:Controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
       mc:Ignorable="d">
     <Page.Resources>
         <Common:RemoteSystemStatusToColorConverter x:Key="RemoteSystemStatusToColorConverter" />
@@ -86,6 +87,7 @@
                             Click="{x:Bind ViewModel.ResetLaunchUri}" />
                     <Button Content="Local"
                             Margin="5,0"
+                            AccessKey="C"
                             Click="{x:Bind ViewModel.LaunchUriLocalAsync}" />
                 </StackPanel>
 
@@ -109,11 +111,13 @@
                 </GridView.Header>
                 <GridView.ItemTemplate>
                     <DataTemplate x:DataType="System:String">
-                        <Image Width="100"
-                               Height="100"
-                               Margin="2"
-                               Stretch="Uniform"
-                               Source="{x:Bind }"></Image>
+
+                        <Controls:ImageEx Width="100"
+                                          IsCacheEnabled="True"
+                                          Height="100"
+                                          Margin="2"
+                                          Stretch="Uniform"
+                                          Source="{x:Bind }" />
                     </DataTemplate>
                 </GridView.ItemTemplate>
             </GridView>
