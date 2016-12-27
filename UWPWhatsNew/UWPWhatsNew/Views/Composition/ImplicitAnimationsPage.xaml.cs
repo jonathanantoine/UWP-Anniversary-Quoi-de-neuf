@@ -149,6 +149,8 @@ namespace UWPWhatsNew.Views.Composition
         private void EnableAnimationOnChildren(bool animationIsEnable)
         {
             ImplicitAnimationCollection implicitAnimationCollection = null;
+            
+
             if (animationIsEnable)
             {
                 implicitAnimationCollection = _compositor.CreateImplicitAnimationCollection();

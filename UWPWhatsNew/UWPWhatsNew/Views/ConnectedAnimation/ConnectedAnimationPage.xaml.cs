@@ -39,6 +39,30 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
             _elementImplicitAnimation["Offset"] = CreateOffsetAnimation();
         }
 
+
+        private void enableImplicitAnimation_Checked(object sender, RoutedEventArgs e)
+        {
+            if (ItemsGridView != null)
+            {
+                foreach (var item in ItemsGridView.Items)
+                {
+                    var container = ItemsGridView.ContainerFromItem(item) as GridViewItem;
+                    var elementVisual = ElementCompositionPreview.GetElementVisual(container);
+
+                    if (enableImplicitAnimation.IsChecked.GetValueOrDefault())
+                    {
+                        elementVisual.ImplicitAnimations = _elementImplicitAnimation;
+                    }
+                    else
+                    {
+                        elementVisual.ImplicitAnimations = null;
+                    }
+                }
+
+            }
+
+        }
+
         private void gridView_ContainerContentChanging(ListViewBase sender, ContainerContentChangingEventArgs args)
         {
             var elementVisual = ElementCompositionPreview.GetElementVisual(args.ItemContainer);
@@ -48,32 +72,30 @@ namespace UWPWhatsNew.Views.ConnectedAnimation
             }
             else
             {
-                //Add implicit animation to each visual 
-                elementVisual.ImplicitAnimations = _elementImplicitAnimation;
+                if (enableImplicitAnimation.IsChecked.GetValueOrDefault())
+                {
+                    //Add implicit animation to each visual 
+                    elementVisual.ImplicitAnimations = _elementImplicitAnimation;
+                }
             }
         }
 
         private CompositionAnimationGroup CreateOffsetAnimation()
         {
 
-            //Define Offset Animation for the Animation group
             Vector3KeyFrameAnimation offsetAnimation = _compositor.CreateVector3KeyFrameAnimation();
             offsetAnimation.InsertExpressionKeyFrame(1.0f, "this.FinalValue");
             offsetAnimation.Duration = TimeSpan.FromSeconds(.4);
 
-            //Define Animation Target for this animation to animate using definition. 
             offsetAnimation.Target = "Offset";
 
-            //Define Rotation Animation for Animation Group. 
             ScalarKeyFrameAnimation rotationAnimation = _compositor.CreateScalarKeyFrameAnimation();
             rotationAnimation.InsertKeyFrame(.5f, 0.160f);
             rotationAnimation.InsertKeyFrame(1f, 0f);
             rotationAnimation.Duration = TimeSpan.FromSeconds(.4);
 
-            //Define Animation Target for this animation to animate using definition. 
             rotationAnimation.Target = "RotationAngle";
 
-            //Add Animations to Animation group. 
             CompositionAnimationGroup animationGroup = _compositor.CreateAnimationGroup();
             animationGroup.Add(offsetAnimation);
             animationGroup.Add(rotationAnimation);
